@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, RadialBarChart, RadialBar } from 'recharts';
 
 // Modern color palette matching the design system
 const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#f43f5e', '#8b5cf6', '#14b8a6', '#eab308', '#ef4444', '#22c55e'];
@@ -83,6 +83,570 @@ const versionComparison = [
   { category: 'Трансфери', november: 17651.4, december: 18442.2, change: 790.8 },
   { category: 'Дефицит', november: -3859.4, december: -4575.4, change: -716.0 },
 ];
+
+// Enhanced Maastricht Criteria data with additional metadata
+const maastrichtCriteriaEnhanced = [
+  {
+    id: 'deficit',
+    name: 'Бюджетен дефицит',
+    shortName: 'Дефицит',
+    value: 3.0,
+    threshold: 3.0,
+    unit: '%',
+    unitLabel: '% от БВП',
+    status: 'ok',
+    description: 'Бюджетният дефицит не трябва да надвишава 3% от БВП',
+    icon: 'chart-pie',
+    compliance: 100, // percentage of how close to threshold (100 = at limit, 50 = at half)
+  },
+  {
+    id: 'debt',
+    name: 'Държавен дълг',
+    shortName: 'Дълг',
+    value: 31.3,
+    threshold: 60.0,
+    unit: '%',
+    unitLabel: '% от БВП',
+    status: 'ok',
+    description: 'Държавният дълг не трябва да надвишава 60% от БВП',
+    icon: 'banknotes',
+    compliance: 52.2, // 31.3/60 * 100
+  },
+  {
+    id: 'inflation',
+    name: 'Инфлация (ХИПЦ)',
+    shortName: 'Инфлация',
+    value: 3.5,
+    threshold: 2.5,
+    unit: '%',
+    unitLabel: '%',
+    status: 'warning',
+    description: 'Инфлацията не трябва да надвишава референтната стойност с повече от 1.5 пр.п.',
+    icon: 'arrow-trending-up',
+    compliance: 140, // exceeds threshold
+  },
+  {
+    id: 'interest',
+    name: 'Дългосрочни лихви',
+    shortName: 'Лихви',
+    value: 3.8,
+    threshold: 4.0,
+    unit: '%',
+    unitLabel: '%',
+    status: 'ok',
+    description: 'Дългосрочните лихвени проценти не трябва да надвишават референтната стойност с повече от 2 пр.п.',
+    icon: 'percent-badge',
+    compliance: 95, // 3.8/4 * 100
+  },
+  {
+    id: 'exchange',
+    name: 'Валутен курс',
+    shortName: 'Валута',
+    value: 0,
+    threshold: 0,
+    unit: 'ERM II',
+    unitLabel: 'ERM II',
+    status: 'ok',
+    description: 'Участие в ERM II без девалвация за минимум 2 години',
+    icon: 'currency-euro',
+    compliance: 100,
+    isFixed: true,
+  },
+];
+
+// Radar chart data for criteria overview
+const radarData = [
+  { criterion: 'Дефицит', fullMark: 100, score: 100, threshold: 100 },
+  { criterion: 'Дълг', fullMark: 100, score: 100, threshold: 100 },
+  { criterion: 'Инфлация', fullMark: 100, score: 71, threshold: 100 }, // 2.5/3.5 * 100
+  { criterion: 'Лихви', fullMark: 100, score: 100, threshold: 100 },
+  { criterion: 'Валута', fullMark: 100, score: 100, threshold: 100 },
+];
+
+// Circular gauge component for individual criteria
+const CircularGauge = ({ value, threshold, status, isFixed, size = 120 }) => {
+  const percentage = isFixed ? 100 : Math.min((value / threshold) * 100, 150);
+  const strokeWidth = 8;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (Math.min(percentage, 100) / 100) * circumference;
+
+  const getColor = () => {
+    if (isFixed) return '#00966E'; // accent-500
+    if (status === 'ok') return '#00966E'; // accent-500
+    if (status === 'warning') return '#f59e0b'; // warning-500
+    return '#D62612'; // danger-500
+  };
+
+  const getBgColor = () => {
+    if (status === 'ok') return '#d1fae5'; // accent-100
+    if (status === 'warning') return '#fef3c7'; // warning-100
+    return '#fee2e2'; // danger-100
+  };
+
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="transform -rotate-90">
+        {/* Background circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke={getBgColor()}
+          strokeWidth={strokeWidth}
+        />
+        {/* Progress circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke={getColor()}
+          strokeWidth={strokeWidth}
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+          className="transition-all duration-700 ease-out"
+        />
+        {/* Threshold marker for non-fixed criteria */}
+        {!isFixed && (
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke="#64748b"
+            strokeWidth={2}
+            strokeDasharray={`2 ${circumference - 2}`}
+            strokeDashoffset={0}
+            opacity={0.4}
+          />
+        )}
+      </svg>
+      {/* Center content */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        {isFixed ? (
+          <div className="text-center">
+            <svg className="w-6 h-6 text-accent-600 mx-auto" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="text-xs font-medium text-slate-600 mt-1">ERM II</span>
+          </div>
+        ) : (
+          <>
+            <span className={`text-lg font-bold tabular-nums ${status === 'ok' ? 'text-slate-900' : 'text-warning-700'}`}>
+              {value}%
+            </span>
+            <span className="text-xs text-slate-500">/ {threshold}%</span>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Status indicator with traffic light styling
+const StatusIndicator = ({ status }) => {
+  const config = {
+    ok: {
+      bg: 'bg-accent-500',
+      ring: 'ring-accent-200',
+      icon: (
+        <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+      ),
+      label: 'Изпълнен',
+    },
+    warning: {
+      bg: 'bg-warning-500',
+      ring: 'ring-warning-200',
+      icon: (
+        <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+        </svg>
+      ),
+      label: 'Внимание',
+    },
+    danger: {
+      bg: 'bg-danger-500',
+      ring: 'ring-danger-200',
+      icon: (
+        <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      ),
+      label: 'Неизпълнен',
+    },
+  };
+
+  const { bg, ring, icon, label } = config[status] || config.ok;
+
+  return (
+    <div className="flex items-center gap-2">
+      <div className={`w-6 h-6 rounded-full ${bg} ring-4 ${ring} flex items-center justify-center shadow-sm`}>
+        {icon}
+      </div>
+      <span className={`text-sm font-medium ${status === 'ok' ? 'text-accent-700' : status === 'warning' ? 'text-warning-700' : 'text-danger-700'}`}>
+        {label}
+      </span>
+    </div>
+  );
+};
+
+// Criterion card component
+const CriterionCard = ({ criterion, index }) => {
+  const { name, value, threshold, unit, unitLabel, status, description, isFixed } = criterion;
+
+  return (
+    <div
+      className={`relative overflow-hidden rounded-xl border-2 transition-all duration-300 hover:shadow-lg ${
+        status === 'ok'
+          ? 'border-accent-200 bg-gradient-to-br from-white to-accent-50/30'
+          : 'border-warning-200 bg-gradient-to-br from-white to-warning-50/30'
+      }`}
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
+      {/* Top accent bar */}
+      <div className={`h-1 ${status === 'ok' ? 'bg-accent-500' : 'bg-warning-500'}`} />
+
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-4">
+          {/* Left side - Info */}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-slate-900 text-lg mb-1">{name}</h3>
+            <p className="text-sm text-slate-500 mb-3 line-clamp-2">{description}</p>
+
+            {/* Comparison bar for non-fixed criteria */}
+            {!isFixed && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-slate-600">Актуална стойност</span>
+                  <span className={`font-bold tabular-nums ${status === 'ok' ? 'text-accent-700' : 'text-warning-700'}`}>
+                    {value}{unit}
+                  </span>
+                </div>
+                <div className="relative h-3 bg-slate-100 rounded-full overflow-hidden">
+                  {/* Threshold marker */}
+                  <div
+                    className="absolute top-0 bottom-0 w-0.5 bg-slate-400 z-10"
+                    style={{ left: `${Math.min(100, 100)}%` }}
+                  />
+                  {/* Value bar */}
+                  <div
+                    className={`h-full rounded-full transition-all duration-700 ${
+                      status === 'ok' ? 'bg-accent-500' : 'bg-warning-500'
+                    }`}
+                    style={{ width: `${Math.min((value / threshold) * 100, 100)}%` }}
+                  />
+                  {/* Overflow indicator for warning */}
+                  {value > threshold && (
+                    <div
+                      className="absolute top-0 h-full bg-warning-500/30 rounded-r-full"
+                      style={{
+                        left: '100%',
+                        width: `${Math.min(((value - threshold) / threshold) * 100, 40)}%`
+                      }}
+                    />
+                  )}
+                </div>
+                <div className="flex items-center justify-between text-xs text-slate-400">
+                  <span>0</span>
+                  <span className="font-medium">Праг: {threshold}{unit}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Fixed criteria display */}
+            {isFixed && (
+              <div className="flex items-center gap-2 mt-2">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-100 rounded-lg">
+                  <svg className="w-4 h-4 text-accent-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  </svg>
+                  <span className="text-sm font-semibold text-accent-700">Фиксиран курс</span>
+                </div>
+                <span className="text-sm text-slate-500">от юли 2020 г.</span>
+              </div>
+            )}
+          </div>
+
+          {/* Right side - Gauge */}
+          <div className="flex-shrink-0">
+            <CircularGauge
+              value={value}
+              threshold={threshold}
+              status={status}
+              isFixed={isFixed}
+              size={100}
+            />
+          </div>
+        </div>
+
+        {/* Status badge */}
+        <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <StatusIndicator status={status} />
+          {!isFixed && (
+            <span className="text-xs text-slate-400">
+              {status === 'ok'
+                ? `Буфер: ${(threshold - value).toFixed(1)} пр.п.`
+                : `Превишение: +${(value - threshold).toFixed(1)} пр.п.`
+              }
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Main Maastricht Criteria Visualization Component
+const MaastrichtCriteriaVisualization = () => {
+  const criteriaCount = maastrichtCriteriaEnhanced.length;
+  const passedCount = maastrichtCriteriaEnhanced.filter(c => c.status === 'ok').length;
+  const warningCount = maastrichtCriteriaEnhanced.filter(c => c.status === 'warning').length;
+  const failedCount = maastrichtCriteriaEnhanced.filter(c => c.status === 'danger').length;
+  const passPercentage = (passedCount / criteriaCount) * 100;
+
+  // Data for the central radial chart
+  const scoreData = [
+    { name: 'Изпълнени', value: passPercentage, fill: '#00966E' },
+  ];
+
+  return (
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-slate-900 font-display mb-2">
+          Съответствие с Маастрихтските критерии
+        </h2>
+        <p className="text-slate-500">
+          Изисквания за членство в еврозоната | Към 01.01.2026
+        </p>
+      </div>
+
+      {/* Score Overview Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Central Score Card */}
+        <div className="lg:col-span-1 bg-gradient-to-br from-gov-600 to-gov-800 rounded-2xl p-6 text-white shadow-elevated">
+          <div className="text-center">
+            <div className="relative w-40 h-40 mx-auto mb-4">
+              {/* Background ring */}
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 160 160">
+                <circle
+                  cx="80"
+                  cy="80"
+                  r="70"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.2)"
+                  strokeWidth="12"
+                />
+                <circle
+                  cx="80"
+                  cy="80"
+                  r="70"
+                  fill="none"
+                  stroke="#00966E"
+                  strokeWidth="12"
+                  strokeDasharray={`${passPercentage * 4.4} 440`}
+                  strokeLinecap="round"
+                  className="transition-all duration-1000 ease-out"
+                />
+              </svg>
+              {/* Center content */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-5xl font-bold font-display">{passedCount}</span>
+                <span className="text-sm text-gov-100">от {criteriaCount}</span>
+              </div>
+            </div>
+
+            <h3 className="text-xl font-semibold mb-2">Критерии изпълнени</h3>
+            <p className="text-sm text-gov-100 mb-4">
+              България е готова за членство в еврозоната с изключение на инфлационния критерий
+            </p>
+
+            {/* Traffic light summary */}
+            <div className="flex justify-center gap-4 pt-4 border-t border-white/20">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-accent-400 ring-2 ring-accent-300" />
+                <span className="text-sm">{passedCount} изпълнени</span>
+              </div>
+              {warningCount > 0 && (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 rounded-full bg-warning-400 ring-2 ring-warning-300" />
+                  <span className="text-sm">{warningCount} внимание</span>
+                </div>
+              )}
+              {failedCount > 0 && (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 rounded-full bg-danger-400 ring-2 ring-danger-300" />
+                  <span className="text-sm">{failedCount} неизпълнени</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Radar Chart */}
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-6 shadow-card">
+          <h3 className="text-lg font-semibold text-slate-900 mb-4 text-center">
+            Обща оценка по критерии
+          </h3>
+          <ResponsiveContainer width="100%" height={280}>
+            <RadarChart cx="50%" cy="50%" outerRadius="75%" data={radarData}>
+              <PolarGrid stroke="#e2e8f0" />
+              <PolarAngleAxis
+                dataKey="criterion"
+                tick={{ fill: '#475569', fontSize: 12, fontWeight: 500 }}
+              />
+              <PolarRadiusAxis
+                angle={90}
+                domain={[0, 100]}
+                tick={{ fill: '#94a3b8', fontSize: 10 }}
+                tickCount={5}
+              />
+              {/* Threshold line at 100% */}
+              <Radar
+                name="Праг"
+                dataKey="threshold"
+                stroke="#94a3b8"
+                fill="none"
+                strokeWidth={2}
+                strokeDasharray="5 5"
+              />
+              {/* Actual values */}
+              <Radar
+                name="България"
+                dataKey="score"
+                stroke="#3674ae"
+                fill="#3674ae"
+                fillOpacity={0.3}
+                strokeWidth={2}
+              />
+              <Legend
+                wrapperStyle={{ paddingTop: '20px' }}
+                formatter={(value) => <span className="text-sm text-slate-600">{value}</span>}
+              />
+            </RadarChart>
+          </ResponsiveContainer>
+          <p className="text-xs text-slate-400 text-center mt-2">
+            Стойности под 100% показват изпълнение на критерия. Инфлацията (71%) е под прага поради превишаване.
+          </p>
+        </div>
+      </div>
+
+      {/* Criteria Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {maastrichtCriteriaEnhanced.map((criterion, index) => (
+          <CriterionCard key={criterion.id} criterion={criterion} index={index} />
+        ))}
+      </div>
+
+      {/* Comparison Table */}
+      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-card">
+        <div className="px-6 py-4 border-b border-slate-100 bg-slate-50">
+          <h3 className="font-semibold text-slate-900">Сравнение: Актуални стойности vs Прагове</h3>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-slate-100">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Критерий</th>
+                <th className="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Праг</th>
+                <th className="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">България</th>
+                <th className="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Разлика</th>
+                <th className="px-6 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wider">Статус</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {maastrichtCriteriaEnhanced.map((item) => {
+                const diff = item.isFixed ? null : item.threshold - item.value;
+                return (
+                  <tr key={item.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-6 py-4">
+                      <div className="font-medium text-slate-900">{item.name}</div>
+                      <div className="text-xs text-slate-400">{item.unitLabel}</div>
+                    </td>
+                    <td className="px-6 py-4 text-right font-mono text-sm text-slate-600">
+                      {item.isFixed ? '—' : `≤ ${item.threshold}${item.unit}`}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <span className={`font-mono text-sm font-semibold ${
+                        item.status === 'ok' ? 'text-accent-700' : 'text-warning-700'
+                      }`}>
+                        {item.isFixed ? 'Фиксиран' : `${item.value}${item.unit}`}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      {diff !== null && (
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold ${
+                          diff >= 0
+                            ? 'bg-accent-100 text-accent-800'
+                            : 'bg-warning-100 text-warning-800'
+                        }`}>
+                          {diff >= 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1)} пр.п.
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex justify-center">
+                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
+                          item.status === 'ok'
+                            ? 'bg-accent-100 text-accent-700'
+                            : 'bg-warning-100 text-warning-700'
+                        }`}>
+                          {item.status === 'ok' ? (
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                          ) : (
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" />
+                            </svg>
+                          )}
+                          {item.status === 'ok' ? 'Изпълнен' : 'Внимание'}
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Info Banner */}
+      <div className="bg-gradient-to-r from-warning-50 to-warning-100/50 rounded-xl border border-warning-200 p-5">
+        <div className="flex gap-4">
+          <div className="flex-shrink-0">
+            <div className="w-10 h-10 rounded-full bg-warning-200 flex items-center justify-center">
+              <svg className="w-5 h-5 text-warning-700" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h4 className="font-semibold text-warning-800 mb-1">Относно инфлационния критерий</h4>
+            <p className="text-sm text-warning-700">
+              Инфлацията в България (3.5% ХИПЦ) надвишава референтната стойност от 2.5%,
+              но се очаква да се понижи до 2.5% до 2028 г. съгласно прогнозата на МФ.
+              Това превишение не възпрепятства членството в еврозоната, а сигнализира
+              за необходимост от допълнително наблюдение.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer note */}
+      <div className="text-center text-sm text-slate-400">
+        Данни: Министерство на финансите | Референтна дата: 01.01.2026 |
+        Прагове съгласно Договора от Маастрихт
+      </div>
+    </div>
+  );
+};
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -310,65 +874,7 @@ export default function BudgetVisualizations() {
         );
 
       case 'maastricht':
-        return (
-          <div className="space-y-6">
-            <h2 className="text-xl font-bold text-center text-slate-900 font-display">Съответствие с Маастрихтските критерии</h2>
-            <p className="text-center text-slate-500">Изисквания за членство в еврозоната (към 01.01.2026)</p>
-            <div className="space-y-3">
-              {maastrichtData.map((item, idx) => (
-                <div key={idx} className={`p-4 rounded-xl border-2 transition-all ${
-                  item.status === 'ok' ? 'border-accent-200 bg-accent-50' : 'border-warning-200 bg-warning-50'
-                }`}>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="font-bold text-lg text-slate-900">{item.criterion}</div>
-                      <div className="text-sm text-slate-500">
-                        {item.threshold > 0 ? `Праг: ≤ ${item.threshold}${item.unit}` : 'Стабилен валутен курс в ERM II'}
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className={`text-2xl font-bold font-display ${
-                        item.status === 'ok' ? 'text-accent-600' : 'text-warning-600'
-                      }`}>
-                        {item.criterion === 'Валутен курс' ? 'Фиксиран' : `${item.bulgaria}${item.unit}`}
-                      </div>
-                      <span className={`badge mt-1 ${item.status === 'ok' ? 'badge-success' : 'badge-warning'}`}>
-                        {item.status === 'ok' ? 'Изпълнен' : 'Внимание'}
-                      </span>
-                    </div>
-                  </div>
-                  {item.threshold > 0 && item.criterion !== 'Валутен курс' && (
-                    <div className="mt-3">
-                      <div className="w-full bg-slate-200 rounded-full h-2.5">
-                        <div
-                          className={`h-2.5 rounded-full transition-all ${item.status === 'ok' ? 'bg-accent-500' : 'bg-warning-500'}`}
-                          style={{ width: `${Math.min((item.bulgaria / item.threshold) * 100, 100)}%` }}
-                        />
-                      </div>
-                      <div className="flex justify-between text-xs text-slate-400 mt-1">
-                        <span>0</span>
-                        <span>{item.threshold}{item.unit} (лимит)</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              <div className="bg-accent-100 p-4 rounded-xl text-center border border-accent-200">
-                <div className="text-3xl font-bold text-accent-700 font-display">4/5</div>
-                <div className="text-sm text-accent-600">Критерии изпълнени</div>
-              </div>
-              <div className="bg-warning-100 p-4 rounded-xl text-center border border-warning-200">
-                <div className="text-3xl font-bold text-warning-700 font-display">1</div>
-                <div className="text-sm text-warning-600">Критерий с повишен риск</div>
-              </div>
-            </div>
-            <div className="text-sm text-slate-500 text-center">
-              Инфлацията е над референтната стойност, но това е допустимо за страна, влизаща в еврозоната
-            </div>
-          </div>
-        );
+        return <MaastrichtCriteriaVisualization />;
 
       case 'sectors':
         return (
