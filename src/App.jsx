@@ -342,8 +342,12 @@ export default function App() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center shadow-lg shadow-primary-500/20">
-                <span className="text-white font-bold text-sm font-display">BG</span>
+              <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg flex flex-col">
+                <div className="flex-1 bg-white"></div>
+                <div className="flex-1 bg-[#00966E] flex items-center justify-center">
+                  <span className="text-white font-bold text-xs font-display">BG</span>
+                </div>
+                <div className="flex-1 bg-[#D62612]"></div>
               </div>
               <div className="hidden sm:block">
                 <h1 className="text-lg font-bold text-slate-900 font-display">Бюджет 2026</h1>
@@ -390,8 +394,12 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
-                <span className="text-slate-600 font-bold text-xs font-display">BG</span>
+              <div className="w-8 h-8 rounded-lg overflow-hidden shadow flex flex-col">
+                <div className="flex-1 bg-white"></div>
+                <div className="flex-1 bg-[#00966E] flex items-center justify-center">
+                  <span className="text-white font-bold text-[8px] font-display">BG</span>
+                </div>
+                <div className="flex-1 bg-[#D62612]"></div>
               </div>
               <div className="text-sm text-slate-600">
                 Проект на Закон за държавния бюджет на Република България за 2026 г.
