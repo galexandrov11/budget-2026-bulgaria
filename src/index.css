@@ -874,63 +874,6 @@
   .criteria-status-danger {
     @apply bg-danger-100 text-danger-600;
   }
-
-  /* --------------------------------------------------------------------------
-     Executive Dashboard Components
-     -------------------------------------------------------------------------- */
-
-  /* Dashboard Metric Card - Enhanced version */
-  .dashboard-metric-card {
-    @apply bg-white rounded-xl border border-slate-200 p-5 shadow-card
-           transition-all duration-300 hover:shadow-elevated hover:border-slate-300;
-  }
-
-  .dashboard-metric-card:hover {
-    transform: translateY(-2px);
-  }
-
-  /* Eurozone Banner - Historic event styling */
-  .eurozone-banner {
-    @apply shadow-elevated;
-  }
-
-  .eurozone-stat-card {
-    @apply bg-white/10 backdrop-blur-sm rounded-xl p-4
-           border border-white/10 transition-all duration-300
-           hover:bg-white/15 hover:border-white/20;
-  }
-
-  /* Budget Health Gauge */
-  .budget-health-gauge {
-    @apply transition-all duration-300;
-  }
-
-  /* Finding Card Animation */
-  .finding-card {
-    animation: findingSlideIn 0.4s ease-out forwards;
-    opacity: 0;
-  }
-
-  @keyframes findingSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Dashboard Header */
-  .dashboard-header {
-    @apply shadow-elevated;
-  }
-
-  /* Sparkline hover effect */
-  .sparkline-container:hover svg polyline {
-    opacity: 1;
-  }
 }
 
 /* ==========================================================================
