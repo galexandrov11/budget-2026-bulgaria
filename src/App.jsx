@@ -96,7 +96,7 @@ function MetricCard({ label, value, change, sublabel }) {
 
   return (
     <div className="metric-card group">
-      <div className="flex items-start justify-between mb-2">
+      <div className="flex items-start justify-between mb-3">
         <span className="metric-label">{label}</span>
         {change !== null && (
           <span className={`badge ${
@@ -104,6 +104,10 @@ function MetricCard({ label, value, change, sublabel }) {
               ? (change > 0 ? 'badge-danger' : 'badge-success')
               : (change > 0 ? 'badge-success' : 'badge-warning')
           }`}>
+            {isDeficit
+              ? (change > 0 ? <Icons.TrendUp /> : <Icons.TrendDown />)
+              : (change > 0 ? <Icons.TrendUp /> : <Icons.TrendDown />)
+            }
             {change > 0 ? '+' : ''}{change.toFixed(2)}%
           </span>
         )}
@@ -117,28 +121,32 @@ function MetricCard({ label, value, change, sublabel }) {
 function FindingCard({ finding }) {
   const colorStyles = {
     danger: {
-      bg: 'bg-danger-50',
-      border: 'border-danger-100',
-      icon: 'bg-danger-500',
+      bg: 'bg-gradient-to-br from-danger-50 to-danger-100/50',
+      border: 'border-danger-200/60',
+      icon: 'bg-gradient-to-br from-danger-500 to-danger-600',
       text: 'text-danger-700',
+      shadow: 'hover:shadow-[0_4px_12px_rgba(214,38,18,0.12)]',
     },
     warning: {
-      bg: 'bg-warning-50',
-      border: 'border-warning-100',
-      icon: 'bg-warning-500',
+      bg: 'bg-gradient-to-br from-warning-50 to-warning-100/50',
+      border: 'border-warning-200/60',
+      icon: 'bg-gradient-to-br from-warning-500 to-warning-600',
       text: 'text-warning-700',
+      shadow: 'hover:shadow-[0_4px_12px_rgba(245,158,11,0.12)]',
     },
     success: {
-      bg: 'bg-accent-50',
-      border: 'border-accent-100',
-      icon: 'bg-accent-500',
+      bg: 'bg-gradient-to-br from-accent-50 to-accent-100/50',
+      border: 'border-accent-200/60',
+      icon: 'bg-gradient-to-br from-accent-500 to-accent-600',
       text: 'text-accent-700',
+      shadow: 'hover:shadow-[0_4px_12px_rgba(0,150,110,0.12)]',
     },
     info: {
-      bg: 'bg-gov-50',
-      border: 'border-gov-100',
-      icon: 'bg-gov-500',
+      bg: 'bg-gradient-to-br from-gov-50 to-gov-100/50',
+      border: 'border-gov-200/60',
+      icon: 'bg-gradient-to-br from-gov-500 to-gov-600',
       text: 'text-gov-700',
+      shadow: 'hover:shadow-[0_4px_12px_rgba(54,116,174,0.12)]',
     },
   };
 
@@ -146,15 +154,15 @@ function FindingCard({ finding }) {
   const IconComponent = finding.icon;
 
   return (
-    <div className={`card p-5 ${style.bg} border ${style.border}`}>
+    <div className={`finding-card ${style.bg} border ${style.border} ${style.shadow}`}>
       <div className="flex items-start gap-4">
-        <div className={`w-10 h-10 rounded-lg ${style.icon} flex items-center justify-center text-white shadow-sm flex-shrink-0`}>
+        <div className={`finding-card-icon ${style.icon}`}>
           <IconComponent />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-medium text-slate-600">{finding.title}</div>
-          <div className={`text-xl font-bold mt-0.5 ${style.text}`}>{finding.value}</div>
-          <div className="text-sm text-slate-500 mt-1">{finding.description}</div>
+          <div className="finding-card-title">{finding.title}</div>
+          <div className={`finding-card-value ${style.text}`}>{finding.value}</div>
+          <div className="finding-card-description">{finding.description}</div>
         </div>
       </div>
     </div>
@@ -165,25 +173,26 @@ function EuroHighlight() {
   return (
     <div className="euro-highlight relative overflow-hidden">
       {/* Subtle decorative elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-80 h-80 bg-white/[0.03] rounded-full -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/[0.03] rounded-full translate-y-1/2 -translate-x-1/3" />
+      <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-gov-400/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
 
       <div className="relative">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+        <div className="flex items-center gap-4 mb-5">
+          <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/10 shadow-lg">
             <Icons.Euro />
           </div>
           <div>
-            <div className="text-gov-100 text-sm font-medium">Присъединяване към Еврозоната</div>
-            <div className="text-xl font-bold">1 януари 2026</div>
+            <div className="text-gov-200 text-sm font-semibold uppercase tracking-wider">Присъединяване към Еврозоната</div>
+            <div className="text-2xl md:text-3xl font-bold tracking-tight">1 януари 2026</div>
           </div>
         </div>
 
-        <p className="text-gov-100 text-sm mb-6 max-w-xl">
+        <p className="text-gov-100 text-base mb-8 max-w-xl leading-relaxed">
           България приема еврото като официална валута. Това е първият държавен бюджет, изцяло деноминиран в евро.
         </p>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-4 md:gap-6">
           <div className="euro-stat">
             <div className="euro-stat-value">1.9558</div>
             <div className="euro-stat-label">BGN/EUR курс</div>
@@ -231,43 +240,49 @@ function SectorComparison() {
   ];
 
   return (
-    <div className="card p-6">
-      <h2 className="text-lg font-semibold text-slate-900 mb-6">Секторни разходи (% от БВП)</h2>
+    <div className="card p-8">
+      <h2 className="section-title mb-8">Секторни разходи (% от БВП)</h2>
       <div className="grid md:grid-cols-3 gap-8">
         {sectors.map((sector, i) => (
-          <div key={i} className="text-center">
-            <div className="relative w-32 h-32 mx-auto mb-4">
+          <div key={i} className="text-center group">
+            <div className="relative w-36 h-36 mx-auto mb-5 transition-transform duration-300 ease-out group-hover:scale-105">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 128 128">
                 {/* Background circle */}
                 <circle
                   cx="64"
                   cy="64"
-                  r="56"
+                  r="54"
                   fill="none"
-                  stroke="#e2e8f0"
-                  strokeWidth="12"
+                  stroke="#f1f5f9"
+                  strokeWidth="14"
                 />
                 {/* Progress circle */}
                 <circle
                   cx="64"
                   cy="64"
-                  r="56"
+                  r="54"
                   fill="none"
                   stroke={
                     sector.status === 'success' ? '#00966E' :
                     sector.status === 'warning' ? '#f59e0b' : '#D62612'
                   }
-                  strokeWidth="12"
-                  strokeDasharray={`${(sector.value / sector.maxScale) * 352} 352`}
+                  strokeWidth="14"
+                  strokeDasharray={`${(sector.value / sector.maxScale) * 339} 339`}
                   strokeLinecap="round"
+                  style={{
+                    filter: `drop-shadow(0 2px 4px ${
+                      sector.status === 'success' ? 'rgba(0,150,110,0.3)' :
+                      sector.status === 'warning' ? 'rgba(245,158,11,0.3)' : 'rgba(214,38,18,0.3)'
+                    })`
+                  }}
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-2xl font-bold text-slate-900 tabular-nums">{sector.value}%</span>
+                <span className="text-2xl md:text-3xl font-bold text-slate-900 tabular-nums tracking-tight">{sector.value}%</span>
               </div>
             </div>
-            <div className="font-semibold text-slate-900">{sector.name}</div>
-            <div className={`text-sm flex items-center justify-center gap-1.5 mt-1 ${
+            <div className="font-bold text-slate-900 text-lg">{sector.name}</div>
+            <div className={`text-sm flex items-center justify-center gap-2 mt-2 font-medium ${
               sector.status === 'success' ? 'text-accent-600' :
               sector.status === 'warning' ? 'text-warning-600' : 'text-danger-600'
             }`}>
@@ -290,8 +305,8 @@ function MaastrichtCriteria() {
   ];
 
   return (
-    <div className="card p-6">
-      <h2 className="text-lg font-semibold text-slate-900 mb-6">Маастрихтски критерии</h2>
+    <div className="card p-8">
+      <h2 className="section-title mb-6">Маастрихтски критерии</h2>
       <div className="space-y-3">
         {criteria.map((item, i) => (
           <div key={i} className="criteria-item">
@@ -302,11 +317,11 @@ function MaastrichtCriteria() {
                 {item.status === 'ok' ? <Icons.Check /> : <Icons.Alert />}
               </div>
               <div>
-                <div className="font-medium text-slate-900">{item.name}</div>
-                <div className="text-sm text-slate-500">{item.threshold}</div>
+                <div className="font-semibold text-slate-900">{item.name}</div>
+                <div className="text-sm text-slate-500 mt-0.5">{item.threshold}</div>
               </div>
             </div>
-            <div className={`text-lg font-bold tabular-nums ${
+            <div className={`text-xl font-bold tabular-nums tracking-tight ${
               item.status === 'ok' ? 'text-accent-600' : 'text-warning-600'
             }`}>
               {item.value}
@@ -320,23 +335,23 @@ function MaastrichtCriteria() {
 
 function SummaryView() {
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-10 animate-fade-in">
       {/* Hero Section */}
-      <div className="text-center mb-10">
-        <span className="badge badge-info badge-lg mb-4">
+      <div className="text-center mb-12">
+        <span className="badge badge-info badge-lg mb-5 shadow-sm">
           <Icons.Info />
           Сравнителен анализ
         </span>
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
           Бюджет 2026
         </h1>
-        <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
           Сравнение на версиите от ноември и декември 2025 г. на проекта за държавен бюджет на Република България
         </p>
       </div>
 
       {/* Key Metrics Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-stagger">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 animate-stagger">
         {summaryMetrics.map((metric, i) => (
           <MetricCard key={i} {...metric} />
         ))}
@@ -347,8 +362,8 @@ function SummaryView() {
 
       {/* Key Findings */}
       <div>
-        <h2 className="text-lg font-semibold text-slate-900 mb-4">Ключови констатации</h2>
-        <div className="grid md:grid-cols-2 gap-4">
+        <h2 className="section-title mb-5">Ключови констатации</h2>
+        <div className="grid md:grid-cols-2 gap-5">
           {keyFindings.map((finding, i) => (
             <FindingCard key={i} finding={finding} />
           ))}
@@ -362,9 +377,9 @@ function SummaryView() {
       <MaastrichtCriteria />
 
       {/* Footer note */}
-      <div className="text-center text-sm text-slate-500 py-6 border-t border-slate-200">
-        <p>Анализът е фактологичен и не съдържа политически оценки.</p>
-        <p className="mt-1">Данни: Министерство на финансите | Дата: 08.12.2025</p>
+      <div className="text-center text-sm text-slate-500 py-8 border-t border-slate-200/80">
+        <p className="font-medium">Анализът е фактологичен и не съдържа политически оценки.</p>
+        <p className="mt-2 text-slate-400">Данни: Министерство на финансите | Дата: 08.12.2025</p>
       </div>
     </div>
   );
