@@ -1,164 +1,353 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+/* ==========================================================================
+   Bulgarian Budget 2026 - Design System
+   A professional, accessible design system for government financial data
+   ========================================================================== */
+
+/* Sofia Sans - Bulgarian-designed font family */
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ==========================================================================
+   Base Layer - Foundation Styles
+   ========================================================================== */
+
 @layer base {
+  /* Root element configuration */
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
+  /* Body defaults */
   body {
-    @apply bg-slate-50 text-slate-900 font-sans;
+    @apply bg-slate-50 text-slate-800 font-sans;
+    font-feature-settings: "kern" 1, "liga" 1;
   }
 
+  /* Selection styling with government blue */
   ::selection {
-    @apply bg-primary-500/20 text-primary-900;
+    @apply bg-gov-100 text-gov-900;
+  }
+
+  /* Focus visible for keyboard navigation */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gov-500 ring-offset-2;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold text-slate-900;
+    text-wrap: balance;
+  }
+
+  h1 { @apply text-4xl tracking-tight; }
+  h2 { @apply text-2xl; }
+  h3 { @apply text-xl; }
+  h4 { @apply text-lg; }
+
+  /* Links */
+  a {
+    @apply text-gov-600 hover:text-gov-700 transition-colors duration-150;
+  }
+
+  /* Small text utility */
+  small {
+    @apply text-sm text-slate-500;
+  }
+
+  /* Mark/highlight */
+  mark {
+    @apply bg-warning-100 text-warning-800 px-1 rounded;
   }
 }
 
+/* ==========================================================================
+   Component Layer - Reusable UI Components
+   ========================================================================== */
+
 @layer components {
-  /* Glass effect cards */
-  .glass {
-    @apply bg-white/80 backdrop-blur-xl border border-white/20;
-  }
+  /* --------------------------------------------------------------------------
+     Cards - Primary content containers
+     -------------------------------------------------------------------------- */
 
-  .glass-dark {
-    @apply bg-slate-900/80 backdrop-blur-xl border border-slate-700/50;
-  }
-
-  /* Gradient text */
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 via-primary-500 to-accent-500;
-  }
-
-  .text-gradient-warm {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-warning-500 via-danger-500 to-danger-600;
-  }
-
-  /* Card styles */
+  /* Standard card - clean, professional */
   .card {
-    @apply bg-white rounded-2xl border border-slate-200/60 transition-all duration-300;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    @apply bg-white rounded-xl border border-slate-200 shadow-card transition-shadow duration-200;
   }
 
   .card:hover {
-    @apply border-slate-300/60;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    @apply shadow-card-hover;
   }
 
-  .card-dark {
-    @apply bg-slate-800 rounded-2xl border border-slate-700/50;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  /* Card with header */
+  .card-header {
+    @apply px-6 py-4 border-b border-slate-100;
   }
 
-  /* Button styles */
+  .card-body {
+    @apply p-6;
+  }
+
+  .card-footer {
+    @apply px-6 py-4 border-t border-slate-100 bg-slate-25;
+  }
+
+  /* Compact card for dense layouts */
+  .card-compact {
+    @apply bg-white rounded-lg border border-slate-200 shadow-sm p-4;
+  }
+
+  /* Elevated card for emphasis */
+  .card-elevated {
+    @apply bg-white rounded-xl border border-slate-100 shadow-elevated;
+  }
+
+  /* Interactive card */
+  .card-interactive {
+    @apply bg-white rounded-xl border border-slate-200 shadow-card
+           transition-all duration-200 cursor-pointer
+           hover:shadow-card-hover hover:border-slate-300;
+  }
+
+  /* --------------------------------------------------------------------------
+     Buttons - Action triggers
+     -------------------------------------------------------------------------- */
+
+  /* Base button */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-2.5 rounded-lg
+           font-medium text-sm
+           transition-all duration-150
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+           disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
+  /* Primary button - Government blue */
   .btn-primary {
-    @apply bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-0.5 active:translate-y-0;
+    @apply bg-gov-600 text-white
+           hover:bg-gov-700 active:bg-gov-800
+           focus-visible:ring-gov-500
+           shadow-sm hover:shadow;
   }
 
+  /* Secondary button */
   .btn-secondary {
-    @apply bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200;
+    @apply bg-white text-slate-700
+           border border-slate-300
+           hover:bg-slate-50 hover:border-slate-400 active:bg-slate-100
+           focus-visible:ring-gov-500
+           shadow-sm;
   }
 
+  /* Ghost button */
   .btn-ghost {
-    @apply text-slate-600 hover:bg-slate-100 hover:text-slate-900;
+    @apply text-slate-600
+           hover:bg-slate-100 hover:text-slate-900
+           active:bg-slate-200
+           focus-visible:ring-gov-500;
   }
 
-  /* Badge styles */
+  /* Danger button */
+  .btn-danger {
+    @apply bg-danger-500 text-white
+           hover:bg-danger-600 active:bg-danger-700
+           focus-visible:ring-danger-500
+           shadow-sm;
+  }
+
+  /* Success button */
+  .btn-success {
+    @apply bg-accent-500 text-white
+           hover:bg-accent-600 active:bg-accent-700
+           focus-visible:ring-accent-500
+           shadow-sm;
+  }
+
+  /* Small button */
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm rounded-md;
+  }
+
+  /* Large button */
+  .btn-lg {
+    @apply px-6 py-3 text-base rounded-lg;
+  }
+
+  /* Icon-only button */
+  .btn-icon {
+    @apply p-2.5 rounded-lg;
+  }
+
+  /* --------------------------------------------------------------------------
+     Badges - Status indicators and labels
+     -------------------------------------------------------------------------- */
+
+  /* Base badge */
   .badge {
-    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+    @apply inline-flex items-center gap-1
+           px-2.5 py-0.5 rounded-md
+           text-xs font-medium;
   }
 
+  /* Semantic badges */
   .badge-success {
-    @apply bg-accent-100 text-accent-700 ring-1 ring-accent-500/20;
+    @apply bg-accent-50 text-accent-700 border border-accent-200;
   }
 
   .badge-warning {
-    @apply bg-warning-100 text-warning-700 ring-1 ring-warning-500/20;
+    @apply bg-warning-50 text-warning-700 border border-warning-200;
   }
 
   .badge-danger {
-    @apply bg-danger-100 text-danger-700 ring-1 ring-danger-500/20;
+    @apply bg-danger-50 text-danger-700 border border-danger-200;
   }
 
   .badge-info {
-    @apply bg-primary-100 text-primary-700 ring-1 ring-primary-500/20;
+    @apply bg-gov-50 text-gov-700 border border-gov-200;
   }
 
-  /* Input styles */
+  .badge-neutral {
+    @apply bg-slate-100 text-slate-600 border border-slate-200;
+  }
+
+  /* Solid badges for emphasis */
+  .badge-solid-success {
+    @apply bg-accent-500 text-white;
+  }
+
+  .badge-solid-warning {
+    @apply bg-warning-500 text-white;
+  }
+
+  .badge-solid-danger {
+    @apply bg-danger-500 text-white;
+  }
+
+  .badge-solid-info {
+    @apply bg-gov-500 text-white;
+  }
+
+  /* Large badge */
+  .badge-lg {
+    @apply px-3 py-1 text-sm rounded-lg;
+  }
+
+  /* --------------------------------------------------------------------------
+     Form Elements
+     -------------------------------------------------------------------------- */
+
+  /* Text input */
   .input {
-    @apply w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all duration-200;
+    @apply w-full px-3 py-2 rounded-lg
+           border border-slate-300 bg-white
+           text-slate-900 placeholder-slate-400
+           transition-colors duration-150
+           hover:border-slate-400
+           focus:outline-none focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500;
   }
 
-  /* Table styles */
-  .table-modern {
-    @apply w-full text-sm;
+  .input-error {
+    @apply border-danger-300
+           focus:ring-danger-500/20 focus:border-danger-500;
   }
 
-  .table-modern thead {
-    @apply bg-slate-50/80 backdrop-blur-sm sticky top-0;
+  /* Select */
+  .select {
+    @apply w-full px-3 py-2 rounded-lg
+           border border-slate-300 bg-white
+           text-slate-900
+           transition-colors duration-150
+           hover:border-slate-400
+           focus:outline-none focus:ring-2 focus:ring-gov-500/20 focus:border-gov-500
+           cursor-pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5rem 1.5rem;
+    padding-right: 2.5rem;
+    appearance: none;
   }
 
-  .table-modern th {
-    @apply px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-200;
+  /* Label */
+  .label {
+    @apply block text-sm font-medium text-slate-700 mb-1.5;
   }
 
-  .table-modern td {
-    @apply px-4 py-3.5 border-b border-slate-100 text-slate-600;
+  /* Help text */
+  .help-text {
+    @apply text-sm text-slate-500 mt-1.5;
   }
 
-  .table-modern tbody tr {
-    @apply transition-colors duration-150;
+  /* Error text */
+  .error-text {
+    @apply text-sm text-danger-600 mt-1.5;
   }
 
-  .table-modern tbody tr:hover {
-    @apply bg-slate-50/50;
+  /* --------------------------------------------------------------------------
+     Tables - Data presentation
+     -------------------------------------------------------------------------- */
+
+  .table {
+    @apply w-full text-sm text-left;
   }
 
-  /* Metric card */
-  .metric-card {
-    @apply relative overflow-hidden rounded-2xl p-6 bg-gradient-to-br;
+  .table thead {
+    @apply bg-slate-50 border-b border-slate-200;
   }
 
-  .metric-card::before {
-    content: '';
-    @apply absolute inset-0 bg-noise opacity-[0.03];
+  .table th {
+    @apply px-4 py-3 text-xs font-semibold text-slate-600 uppercase tracking-wider;
   }
 
-  /* Section divider */
-  .section-divider {
-    @apply h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent;
+  .table td {
+    @apply px-4 py-3 text-slate-700 border-b border-slate-100;
   }
 
-  /* Glow effect */
-  .glow {
-    @apply relative;
+  .table tbody tr {
+    @apply transition-colors duration-100;
   }
 
-  .glow::before {
-    content: '';
-    @apply absolute -inset-1 bg-gradient-to-r from-primary-500 to-accent-500 rounded-2xl opacity-0 blur-xl transition-opacity duration-500;
+  .table tbody tr:hover {
+    @apply bg-slate-50;
   }
 
-  .glow:hover::before {
-    @apply opacity-20;
+  .table tbody tr:last-child td {
+    @apply border-b-0;
   }
 
-  /* Tab styles */
+  /* Striped table variant */
+  .table-striped tbody tr:nth-child(even) {
+    @apply bg-slate-25;
+  }
+
+  /* Compact table */
+  .table-compact th,
+  .table-compact td {
+    @apply px-3 py-2;
+  }
+
+  /* --------------------------------------------------------------------------
+     Navigation - Tabs and navigation elements
+     -------------------------------------------------------------------------- */
+
+  /* Tab group container */
   .tab-group {
-    @apply flex p-1 bg-slate-100 rounded-xl gap-1;
+    @apply inline-flex p-1 bg-slate-100 rounded-lg gap-0.5;
   }
 
+  /* Individual tab */
   .tab {
-    @apply flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200;
+    @apply inline-flex items-center gap-2
+           px-4 py-2 rounded-md
+           text-sm font-medium
+           transition-all duration-150
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gov-500 focus-visible:ring-inset;
   }
 
   .tab-inactive {
@@ -166,34 +355,369 @@
   }
 
   .tab-active {
-    @apply bg-white text-primary-600 shadow-sm;
+    @apply bg-white text-gov-700 shadow-sm;
   }
 
-  /* Stat indicator */
-  .stat-positive {
+  /* Underline tabs variant */
+  .tab-underline-group {
+    @apply flex border-b border-slate-200 gap-4;
+  }
+
+  .tab-underline {
+    @apply inline-flex items-center gap-2
+           px-1 py-3
+           text-sm font-medium
+           border-b-2 border-transparent -mb-px
+           transition-colors duration-150;
+  }
+
+  .tab-underline-inactive {
+    @apply text-slate-500 hover:text-slate-700 hover:border-slate-300;
+  }
+
+  .tab-underline-active {
+    @apply text-gov-600 border-gov-600;
+  }
+
+  /* --------------------------------------------------------------------------
+     Metrics & Data Display
+     -------------------------------------------------------------------------- */
+
+  /* Metric card - for key statistics */
+  .metric-card {
+    @apply bg-white rounded-xl border border-slate-200 p-5 shadow-card;
+  }
+
+  .metric-label {
+    @apply text-sm font-medium text-slate-500 mb-1;
+  }
+
+  .metric-value {
+    @apply text-2xl font-bold text-slate-900 tabular-nums tracking-tight;
+  }
+
+  .metric-sublabel {
+    @apply text-xs text-slate-400 mt-1;
+  }
+
+  /* Metric change indicators */
+  .metric-change {
+    @apply inline-flex items-center gap-1 text-sm font-medium;
+  }
+
+  .metric-change-positive {
     @apply text-accent-600;
   }
 
-  .stat-negative {
+  .metric-change-negative {
     @apply text-danger-600;
   }
 
-  .stat-neutral {
+  .metric-change-neutral {
     @apply text-slate-500;
+  }
+
+  /* Data highlight box */
+  .data-highlight {
+    @apply bg-gov-50 border border-gov-100 rounded-lg p-4;
+  }
+
+  .data-highlight-success {
+    @apply bg-accent-50 border-accent-100;
+  }
+
+  .data-highlight-warning {
+    @apply bg-warning-50 border-warning-100;
+  }
+
+  .data-highlight-danger {
+    @apply bg-danger-50 border-danger-100;
+  }
+
+  /* --------------------------------------------------------------------------
+     Alerts & Notifications
+     -------------------------------------------------------------------------- */
+
+  .alert {
+    @apply flex gap-3 p-4 rounded-lg border;
+  }
+
+  .alert-info {
+    @apply bg-gov-50 border-gov-200 text-gov-800;
+  }
+
+  .alert-success {
+    @apply bg-accent-50 border-accent-200 text-accent-800;
+  }
+
+  .alert-warning {
+    @apply bg-warning-50 border-warning-200 text-warning-800;
+  }
+
+  .alert-danger {
+    @apply bg-danger-50 border-danger-200 text-danger-800;
+  }
+
+  .alert-icon {
+    @apply flex-shrink-0 w-5 h-5;
+  }
+
+  .alert-content {
+    @apply flex-1 text-sm;
+  }
+
+  .alert-title {
+    @apply font-medium mb-1;
+  }
+
+  /* --------------------------------------------------------------------------
+     Progress & Loading
+     -------------------------------------------------------------------------- */
+
+  .progress-bar {
+    @apply h-2 bg-slate-100 rounded-full overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-300;
+  }
+
+  .progress-fill-gov {
+    @apply bg-gov-500;
+  }
+
+  .progress-fill-success {
+    @apply bg-accent-500;
+  }
+
+  .progress-fill-warning {
+    @apply bg-warning-500;
+  }
+
+  .progress-fill-danger {
+    @apply bg-danger-500;
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    @apply bg-slate-200 rounded animate-pulse;
+  }
+
+  /* --------------------------------------------------------------------------
+     Tooltips
+     -------------------------------------------------------------------------- */
+
+  .tooltip {
+    @apply absolute z-tooltip
+           px-2 py-1 rounded-md
+           bg-slate-800 text-white text-xs font-medium
+           shadow-lg
+           pointer-events-none;
+  }
+
+  /* --------------------------------------------------------------------------
+     Dividers
+     -------------------------------------------------------------------------- */
+
+  .divider {
+    @apply h-px bg-slate-200;
+  }
+
+  .divider-vertical {
+    @apply w-px h-full bg-slate-200;
+  }
+
+  /* --------------------------------------------------------------------------
+     Header & Navigation Specific
+     -------------------------------------------------------------------------- */
+
+  /* Site header */
+  .site-header {
+    @apply bg-white border-b border-slate-200 shadow-sm;
+  }
+
+  /* Government header bar */
+  .gov-header-bar {
+    @apply bg-gov-700 text-white py-1 text-xs;
+  }
+
+  /* --------------------------------------------------------------------------
+     Footer
+     -------------------------------------------------------------------------- */
+
+  .site-footer {
+    @apply bg-slate-50 border-t border-slate-200;
+  }
+
+  /* --------------------------------------------------------------------------
+     Chart Containers
+     -------------------------------------------------------------------------- */
+
+  .chart-container {
+    @apply bg-white rounded-xl border border-slate-200 shadow-card p-6;
+  }
+
+  .chart-title {
+    @apply text-lg font-semibold text-slate-900 mb-1;
+  }
+
+  .chart-subtitle {
+    @apply text-sm text-slate-500 mb-4;
+  }
+
+  .chart-legend {
+    @apply flex flex-wrap gap-4 mt-4 pt-4 border-t border-slate-100;
+  }
+
+  .chart-legend-item {
+    @apply flex items-center gap-2 text-sm text-slate-600;
+  }
+
+  .chart-legend-dot {
+    @apply w-3 h-3 rounded-full;
+  }
+
+  /* --------------------------------------------------------------------------
+     Document/Article Styles
+     -------------------------------------------------------------------------- */
+
+  .prose-gov {
+    @apply text-slate-700 leading-relaxed;
+  }
+
+  .prose-gov h2 {
+    @apply text-xl font-semibold text-slate-900 mt-8 mb-4 pb-2 border-b border-slate-200;
+  }
+
+  .prose-gov h3 {
+    @apply text-lg font-semibold text-slate-900 mt-6 mb-3;
+  }
+
+  .prose-gov p {
+    @apply mb-4;
+  }
+
+  .prose-gov ul, .prose-gov ol {
+    @apply mb-4 pl-5;
+  }
+
+  .prose-gov li {
+    @apply mb-2;
+  }
+
+  .prose-gov ul li {
+    @apply list-disc;
+  }
+
+  .prose-gov ol li {
+    @apply list-decimal;
+  }
+
+  /* --------------------------------------------------------------------------
+     Table of Contents
+     -------------------------------------------------------------------------- */
+
+  .toc {
+    @apply space-y-1;
+  }
+
+  .toc-item {
+    @apply block px-3 py-2 rounded-md text-sm text-slate-600
+           hover:bg-slate-100 hover:text-slate-900
+           transition-colors duration-150;
+  }
+
+  .toc-item-active {
+    @apply bg-gov-50 text-gov-700 font-medium;
+  }
+
+  .toc-item-nested {
+    @apply pl-6;
+  }
+
+  /* --------------------------------------------------------------------------
+     Flag Colors - Bulgarian National Colors
+     -------------------------------------------------------------------------- */
+
+  .bg-bulgaria-white { @apply bg-white; }
+  .bg-bulgaria-green { @apply bg-[#00966E]; }
+  .bg-bulgaria-red { @apply bg-[#D62612]; }
+
+  /* Bulgarian flag representation */
+  .flag-bulgaria {
+    @apply flex flex-col overflow-hidden rounded;
+  }
+
+  .flag-bulgaria > div {
+    @apply flex-1;
+  }
+
+  /* --------------------------------------------------------------------------
+     Euro Zone Highlight
+     -------------------------------------------------------------------------- */
+
+  .euro-highlight {
+    @apply bg-gradient-to-br from-gov-600 to-gov-800 text-white rounded-xl p-6;
+  }
+
+  .euro-stat {
+    @apply bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center;
+  }
+
+  .euro-stat-value {
+    @apply text-2xl font-bold tracking-tight;
+  }
+
+  .euro-stat-label {
+    @apply text-xs text-gov-100 mt-1;
+  }
+
+  /* --------------------------------------------------------------------------
+     Maastricht Criteria Specific
+     -------------------------------------------------------------------------- */
+
+  .criteria-item {
+    @apply flex items-center justify-between p-4 rounded-lg bg-slate-50
+           hover:bg-slate-100 transition-colors duration-150;
+  }
+
+  .criteria-status {
+    @apply w-10 h-10 rounded-lg flex items-center justify-center;
+  }
+
+  .criteria-status-ok {
+    @apply bg-accent-100 text-accent-600;
+  }
+
+  .criteria-status-warning {
+    @apply bg-warning-100 text-warning-600;
+  }
+
+  .criteria-status-danger {
+    @apply bg-danger-100 text-danger-600;
   }
 }
 
+/* ==========================================================================
+   Utility Layer - Helper Classes
+   ========================================================================== */
+
 @layer utilities {
+  /* --------------------------------------------------------------------------
+     Scrollbar Styles
+     -------------------------------------------------------------------------- */
+
   /* Hide scrollbar */
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
 
-  /* Custom scrollbar */
+  /* Thin scrollbar */
   .scrollbar-thin::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -204,42 +728,185 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply bg-slate-300 rounded-full hover:bg-slate-400;
+    @apply bg-slate-300 rounded-full;
   }
 
-  /* Focus ring */
-  .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:ring-offset-2;
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400;
   }
 
-  /* Smooth transitions */
-  .transition-smooth {
-    @apply transition-all duration-300 ease-out;
+  /* --------------------------------------------------------------------------
+     Typography Utilities
+     -------------------------------------------------------------------------- */
+
+  /* Tabular numbers for data */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
   }
 
-  /* Text balance */
+  /* Slashed zero for clarity */
+  .slashed-zero {
+    font-variant-numeric: slashed-zero;
+  }
+
+  /* Text balance for headings */
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Truncate with ellipsis */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* --------------------------------------------------------------------------
+     Focus & Interaction
+     -------------------------------------------------------------------------- */
+
+  /* Focus ring */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-gov-500 focus:ring-offset-2;
+  }
+
+  .focus-ring-inset {
+    @apply focus:outline-none focus:ring-2 focus:ring-gov-500 focus:ring-inset;
+  }
+
+  /* --------------------------------------------------------------------------
+     Transitions
+     -------------------------------------------------------------------------- */
+
+  .transition-base {
+    @apply transition-all duration-150 ease-out;
+  }
+
+  .transition-smooth {
+    @apply transition-all duration-250 ease-out;
+  }
+
+  /* --------------------------------------------------------------------------
+     Spacing Utilities
+     -------------------------------------------------------------------------- */
+
+  /* Section spacing */
+  .section-spacing {
+    @apply py-8 md:py-12;
+  }
+
+  .section-spacing-lg {
+    @apply py-12 md:py-16;
+  }
+
+  /* --------------------------------------------------------------------------
+     Print Styles
+     -------------------------------------------------------------------------- */
+
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+
+    .print-break-before {
+      page-break-before: always;
+    }
+
+    .print-break-after {
+      page-break-after: always;
+    }
+
+    .print-avoid-break {
+      page-break-inside: avoid;
+    }
+  }
 }
 
-/* Custom animations */
-@keyframes shimmer {
+/* ==========================================================================
+   Custom Animations
+   ========================================================================== */
+
+/* Subtle fade in for page content */
+@keyframes contentFadeIn {
   0% {
-    background-position: -200% 0;
+    opacity: 0;
+    transform: translateY(4px);
   }
   100% {
-    background-position: 200% 0;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.animate-shimmer {
-  animation: shimmer 2s linear infinite;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  background-size: 200% 100%;
+.animate-content-in {
+  animation: contentFadeIn 0.3s ease-out forwards;
 }
 
-/* Number formatting */
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
+/* Staggered animation for lists */
+.animate-stagger > * {
+  animation: contentFadeIn 0.3s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.animate-stagger > *:nth-child(2) { animation-delay: 50ms; }
+.animate-stagger > *:nth-child(3) { animation-delay: 100ms; }
+.animate-stagger > *:nth-child(4) { animation-delay: 150ms; }
+.animate-stagger > *:nth-child(5) { animation-delay: 200ms; }
+.animate-stagger > *:nth-child(6) { animation-delay: 250ms; }
+
+/* ==========================================================================
+   Recharts Custom Styles
+   ========================================================================== */
+
+/* Override Recharts default styles for better integration */
+.recharts-wrapper {
+  font-family: "Sofia Sans", system-ui, sans-serif !important;
+}
+
+.recharts-text {
+  fill: #475569 !important;
+  font-size: 12px !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: #64748b !important;
+  font-size: 11px !important;
+}
+
+.recharts-legend-item-text {
+  color: #334155 !important;
+  font-size: 13px !important;
+}
+
+.recharts-tooltip-wrapper {
+  font-family: "Sofia Sans", system-ui, sans-serif !important;
+}
+
+/* Custom tooltip styling */
+.recharts-default-tooltip {
+  @apply bg-white border border-slate-200 rounded-lg shadow-dropdown !important;
+}
+
+.recharts-tooltip-label {
+  @apply font-semibold text-slate-900 mb-2 !important;
+}
+
+.recharts-tooltip-item {
+  @apply text-sm text-slate-600 !important;
 }

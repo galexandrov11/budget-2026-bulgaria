@@ -7,39 +7,66 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Rich slate-based palette
+        // Government Blue - Primary color for trustworthiness and authority
+        // Inspired by official government documents and EU institutional blue
+        gov: {
+          50: '#f0f5fa',
+          100: '#dae6f2',
+          200: '#b8d0e8',
+          300: '#8ab4d9',
+          400: '#5692c6',
+          500: '#3674ae',
+          600: '#2a5c93',
+          700: '#244b78',
+          800: '#223f63',
+          900: '#1e3650',
+          950: '#142436',
+        },
+        // Slate - Neutral grays for text and backgrounds
         slate: {
-          925: '#0c1222',
+          25: '#fcfcfd',
+          50: '#f8fafc',
+          100: '#f1f5f9',
+          150: '#e9eef4',
+          200: '#e2e8f0',
+          300: '#cbd5e1',
+          400: '#94a3b8',
+          500: '#64748b',
+          600: '#475569',
+          700: '#334155',
+          800: '#1e293b',
+          900: '#0f172a',
           950: '#020617',
         },
-        // Primary - Deep indigo/blue
-        primary: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-          950: '#1e1b4b',
-        },
-        // Accent - Emerald
+        // Bulgarian Green - Secondary accent (from flag)
+        // Used sparingly for positive indicators
         accent: {
           50: '#ecfdf5',
           100: '#d1fae5',
           200: '#a7f3d0',
           300: '#6ee7b7',
           400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
+          500: '#00966E', // Bulgarian flag green
+          600: '#047857',
+          700: '#065f46',
+          800: '#064e3b',
+          900: '#022c22',
         },
-        // Warning - Amber
+        // Bulgarian Red - Tertiary accent (from flag)
+        // Used sparingly for negative indicators and alerts
+        danger: {
+          50: '#fef2f2',
+          100: '#fee2e2',
+          200: '#fecaca',
+          300: '#fca5a5',
+          400: '#f87171',
+          500: '#D62612', // Bulgarian flag red
+          600: '#b91c1c',
+          700: '#991b1b',
+          800: '#7f1d1d',
+          900: '#450a0a',
+        },
+        // Warning - Amber for caution states
         warning: {
           50: '#fffbeb',
           100: '#fef3c7',
@@ -52,72 +79,144 @@ export default {
           800: '#92400e',
           900: '#78350f',
         },
-        // Danger - Rose
-        danger: {
-          50: '#fff1f2',
-          100: '#ffe4e6',
-          200: '#fecdd3',
-          300: '#fda4af',
-          400: '#fb7185',
-          500: '#f43f5e',
-          600: '#e11d48',
-          700: '#be123c',
-          800: '#9f1239',
-          900: '#881337',
+        // Success - For positive indicators (uses accent green)
+        success: {
+          50: '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981',
+          600: '#059669',
+          700: '#047857',
+          800: '#065f46',
+          900: '#064e3b',
+        },
+        // Info - For informational elements
+        info: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
+        },
+        // Chart colors - Carefully chosen for data visualization
+        chart: {
+          blue: '#3674ae',
+          green: '#00966E',
+          red: '#D62612',
+          amber: '#f59e0b',
+          purple: '#7c3aed',
+          cyan: '#0891b2',
+          orange: '#ea580c',
+          pink: '#db2777',
+          teal: '#0d9488',
+          indigo: '#4f46e5',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        // Sofia Sans - Bulgarian-designed font, primary typeface
+        sans: ['"Sofia Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        // Display font for headings
+        display: ['"Sofia Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        // Monospace for numbers and code
+        mono: ['"JetBrains Mono"', '"Fira Code"', 'ui-monospace', 'monospace'],
       },
       fontSize: {
-        '2xs': ['0.625rem', { lineHeight: '0.875rem' }],
+        // Extended type scale for data-heavy interfaces
+        '2xs': ['0.625rem', { lineHeight: '0.875rem', letterSpacing: '0.025em' }],
+        'xs': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.01em' }],
+        'sm': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0' }],
+        'base': ['1rem', { lineHeight: '1.5rem', letterSpacing: '0' }],
+        'lg': ['1.125rem', { lineHeight: '1.75rem', letterSpacing: '-0.01em' }],
+        'xl': ['1.25rem', { lineHeight: '1.75rem', letterSpacing: '-0.01em' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.015em' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem', letterSpacing: '-0.02em' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem', letterSpacing: '-0.02em' }],
+        '5xl': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.025em' }],
+      },
+      spacing: {
+        // Extended spacing for data layouts
+        '18': '4.5rem',
+        '88': '22rem',
+        '112': '28rem',
+        '128': '32rem',
       },
       boxShadow: {
-        'glow': '0 0 20px rgba(99, 102, 241, 0.15)',
-        'glow-lg': '0 0 40px rgba(99, 102, 241, 0.2)',
-        'inner-glow': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.05)',
-        'card': '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
-        'card-hover': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
-        'elevated': '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+        // Subtle, professional shadows
+        'xs': '0 1px 2px 0 rgb(0 0 0 / 0.03)',
+        'sm': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        'card': '0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.03)',
+        'card-hover': '0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.04)',
+        'elevated': '0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.03)',
+        'dropdown': '0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05)',
+        'modal': '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.04)',
+        // Inner shadows for inset effects
+        'inner-subtle': 'inset 0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        'inner-border': 'inset 0 0 0 1px rgb(0 0 0 / 0.05)',
+        // Focus ring shadows
+        'focus': '0 0 0 2px rgb(54 116 174 / 0.2)',
+        'focus-danger': '0 0 0 2px rgb(214 38 18 / 0.2)',
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'noise': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")",
+      borderRadius: {
+        // Conservative, professional radii
+        'sm': '0.25rem',    // 4px
+        'DEFAULT': '0.375rem', // 6px
+        'md': '0.5rem',     // 8px
+        'lg': '0.625rem',   // 10px
+        'xl': '0.75rem',    // 12px
+        '2xl': '1rem',      // 16px
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'slide-down': 'slideDown 0.3s ease-out',
+        'fade-in': 'fadeIn 0.3s ease-out',
+        'fade-in-up': 'fadeInUp 0.4s ease-out',
+        'slide-down': 'slideDown 0.2s ease-out',
         'scale-in': 'scaleIn 0.2s ease-out',
-        'pulse-soft': 'pulseSoft 2s infinite',
+        'spin-slow': 'spin 2s linear infinite',
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         slideDown: {
-          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+          '0%': { opacity: '0', transform: 'translateY(-4px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '0%': { opacity: '0', transform: 'scale(0.98)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
-        pulseSoft: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.7' },
-        },
       },
-      borderRadius: {
-        '4xl': '2rem',
+      // Extended transition durations
+      transitionDuration: {
+        '250': '250ms',
+        '350': '350ms',
+      },
+      // Z-index scale
+      zIndex: {
+        'dropdown': '1000',
+        'sticky': '1020',
+        'fixed': '1030',
+        'modal-backdrop': '1040',
+        'modal': '1050',
+        'popover': '1060',
+        'tooltip': '1070',
+      },
+      // Max width for content containers
+      maxWidth: {
+        'content': '72rem', // 1152px
+        'narrow': '42rem',  // 672px
+        'wide': '90rem',    // 1440px
       },
     },
   },

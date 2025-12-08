@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BudgetVisualizations from './components/BudgetVisualizations';
 import FullAnalysis from './components/FullAnalysis';
 
-// Modern Icons
+// Icons - Simple, professional SVG icons
 const Icons = {
   Chart: () => (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -19,14 +19,14 @@ const Icons = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
     </svg>
   ),
-  ArrowUp: () => (
+  TrendUp: () => (
     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
     </svg>
   ),
-  ArrowDown: () => (
+  TrendDown: () => (
     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6L9 12.75l4.286-4.286a11.948 11.948 0 014.306 6.43l.776 2.898m0 0l3.182-5.511m-3.182 5.51l-5.511-3.181" />
     </svg>
   ),
   Check: () => (
@@ -41,12 +41,12 @@ const Icons = {
   ),
   Euro: () => (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5H5.25m2.25 3H5.25m11.25-3h2.25m-2.25 3h2.25M12 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5H5.25m2.25 3H5.25M9 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
   ),
-  Sparkles: () => (
+  Info: () => (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
     </svg>
   ),
 };
@@ -56,23 +56,23 @@ const keyFindings = [
   {
     title: "Дефицитът се увеличава",
     value: "+18.5%",
-    description: "от 3.86 на 4.58 млрд. €",
+    description: "от 3.86 на 4.58 млрд. EUR",
     type: "danger",
-    icon: Icons.ArrowUp,
+    icon: Icons.TrendUp,
   },
   {
     title: "Данъчни приходи",
     value: "-913 млн.",
     description: "намаление спрямо ноември",
     type: "warning",
-    icon: Icons.ArrowDown,
+    icon: Icons.TrendDown,
   },
   {
     title: "Капиталови разходи",
     value: "-16.3%",
-    description: "-481 млн. € съкращение",
+    description: "-481 млн. EUR съкращение",
     type: "warning",
-    icon: Icons.ArrowDown,
+    icon: Icons.TrendDown,
   },
   {
     title: "Маастрихт дефицит",
@@ -85,55 +85,75 @@ const keyFindings = [
 
 // Summary metrics
 const summaryMetrics = [
-  { label: "Приходи", value: "30.4 млрд. €", change: -2.92, sublabel: "Декември 2025" },
-  { label: "Разходи", value: "17.3 млрд. €", change: -2.38, sublabel: "Декември 2025" },
-  { label: "Дефицит", value: "4.58 млрд. €", change: 18.70, sublabel: "3.81% от БВП" },
+  { label: "Приходи", value: "30.4 млрд. EUR", change: -2.92, sublabel: "Декември 2025" },
+  { label: "Разходи", value: "17.3 млрд. EUR", change: -2.38, sublabel: "Декември 2025" },
+  { label: "Дефицит", value: "4.58 млрд. EUR", change: 18.70, sublabel: "3.81% от БВП" },
   { label: "Държавен дълг", value: "31.3%", change: null, sublabel: "от БВП (лимит 60%)" },
 ];
 
 function MetricCard({ label, value, change, sublabel }) {
+  const isDeficit = label === 'Дефицит';
+
   return (
-    <div className="card p-5 group hover:border-primary-200">
-      <div className="flex items-start justify-between mb-3">
-        <span className="text-sm font-medium text-slate-500">{label}</span>
+    <div className="metric-card group">
+      <div className="flex items-start justify-between mb-2">
+        <span className="metric-label">{label}</span>
         {change !== null && (
-          <span className={`badge ${change > 0 ? (label === 'Дефицит' ? 'badge-danger' : 'badge-success') : 'badge-warning'}`}>
+          <span className={`badge ${
+            isDeficit
+              ? (change > 0 ? 'badge-danger' : 'badge-success')
+              : (change > 0 ? 'badge-success' : 'badge-warning')
+          }`}>
             {change > 0 ? '+' : ''}{change.toFixed(2)}%
           </span>
         )}
       </div>
-      <div className="text-2xl font-bold text-slate-900 font-display tabular-nums">{value}</div>
-      <div className="text-xs text-slate-400 mt-1">{sublabel}</div>
+      <div className="metric-value">{value}</div>
+      <div className="metric-sublabel">{sublabel}</div>
     </div>
   );
 }
 
 function FindingCard({ finding }) {
-  const styles = {
-    danger: 'from-danger-500 to-danger-600',
-    warning: 'from-warning-500 to-warning-600',
-    success: 'from-accent-500 to-accent-600',
-    info: 'from-primary-500 to-primary-600',
+  const colorStyles = {
+    danger: {
+      bg: 'bg-danger-50',
+      border: 'border-danger-100',
+      icon: 'bg-danger-500',
+      text: 'text-danger-700',
+    },
+    warning: {
+      bg: 'bg-warning-50',
+      border: 'border-warning-100',
+      icon: 'bg-warning-500',
+      text: 'text-warning-700',
+    },
+    success: {
+      bg: 'bg-accent-50',
+      border: 'border-accent-100',
+      icon: 'bg-accent-500',
+      text: 'text-accent-700',
+    },
+    info: {
+      bg: 'bg-gov-50',
+      border: 'border-gov-100',
+      icon: 'bg-gov-500',
+      text: 'text-gov-700',
+    },
   };
 
-  const bgStyles = {
-    danger: 'bg-danger-50 border-danger-100',
-    warning: 'bg-warning-50 border-warning-100',
-    success: 'bg-accent-50 border-accent-100',
-    info: 'bg-primary-50 border-primary-100',
-  };
-
+  const style = colorStyles[finding.type];
   const IconComponent = finding.icon;
 
   return (
-    <div className={`card p-5 ${bgStyles[finding.type]} border`}>
+    <div className={`card p-5 ${style.bg} border ${style.border}`}>
       <div className="flex items-start gap-4">
-        <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${styles[finding.type]} flex items-center justify-center text-white shadow-lg`}>
+        <div className={`w-10 h-10 rounded-lg ${style.icon} flex items-center justify-center text-white shadow-sm flex-shrink-0`}>
           <IconComponent />
         </div>
         <div className="flex-1 min-w-0">
           <div className="text-sm font-medium text-slate-600">{finding.title}</div>
-          <div className="text-xl font-bold text-slate-900 mt-0.5 font-display">{finding.value}</div>
+          <div className={`text-xl font-bold mt-0.5 ${style.text}`}>{finding.value}</div>
           <div className="text-sm text-slate-500 mt-1">{finding.description}</div>
         </div>
       </div>
@@ -143,39 +163,156 @@ function FindingCard({ finding }) {
 
 function EuroHighlight() {
   return (
-    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 p-8 text-white">
+    <div className="euro-highlight relative overflow-hidden">
+      {/* Subtle decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
 
       <div className="relative">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
             <Icons.Euro />
           </div>
           <div>
-            <div className="text-primary-200 text-sm font-medium">Еврозона</div>
-            <div className="text-xl font-bold font-display">1 януари 2026</div>
+            <div className="text-gov-100 text-sm font-medium">Присъединяване към Еврозоната</div>
+            <div className="text-xl font-bold">1 януари 2026</div>
           </div>
         </div>
 
-        <p className="text-primary-100 text-sm mb-6">
-          България приема еврото като официална валута. Първият бюджет, изцяло деноминиран в евро.
+        <p className="text-gov-100 text-sm mb-6 max-w-xl">
+          България приема еврото като официална валута. Това е първият държавен бюджет, изцяло деноминиран в евро.
         </p>
 
         <div className="grid grid-cols-3 gap-4">
-          <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold font-display">1.9558</div>
-            <div className="text-xs text-primary-200 mt-1">BGN/EUR курс</div>
+          <div className="euro-stat">
+            <div className="euro-stat-value">1.9558</div>
+            <div className="euro-stat-label">BGN/EUR курс</div>
           </div>
-          <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold font-display">120.1</div>
-            <div className="text-xs text-primary-200 mt-1">млрд. € БВП</div>
+          <div className="euro-stat">
+            <div className="euro-stat-value">120.1</div>
+            <div className="euro-stat-label">млрд. EUR БВП</div>
           </div>
-          <div className="bg-white/10 backdrop-blur rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold font-display">4/5</div>
-            <div className="text-xs text-primary-200 mt-1">критерии ✓</div>
+          <div className="euro-stat">
+            <div className="euro-stat-value">4/5</div>
+            <div className="euro-stat-label">Маастрихт критерии</div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function SectorComparison() {
+  const sectors = [
+    {
+      name: 'Отбрана',
+      value: 2.05,
+      target: 2.0,
+      targetLabel: 'НАТО: 2.0%',
+      status: 'success',
+      maxScale: 3,
+    },
+    {
+      name: 'Образование',
+      value: 4.8,
+      target: 5.0,
+      targetLabel: 'ЕС средно: 5.0%',
+      status: 'warning',
+      maxScale: 7,
+    },
+    {
+      name: 'Здравеопазване',
+      value: 5.3,
+      target: 7.5,
+      targetLabel: 'ЕС средно: 7.5%',
+      status: 'danger',
+      maxScale: 10,
+    },
+  ];
+
+  return (
+    <div className="card p-6">
+      <h2 className="text-lg font-semibold text-slate-900 mb-6">Секторни разходи (% от БВП)</h2>
+      <div className="grid md:grid-cols-3 gap-8">
+        {sectors.map((sector, i) => (
+          <div key={i} className="text-center">
+            <div className="relative w-32 h-32 mx-auto mb-4">
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 128 128">
+                {/* Background circle */}
+                <circle
+                  cx="64"
+                  cy="64"
+                  r="56"
+                  fill="none"
+                  stroke="#e2e8f0"
+                  strokeWidth="12"
+                />
+                {/* Progress circle */}
+                <circle
+                  cx="64"
+                  cy="64"
+                  r="56"
+                  fill="none"
+                  stroke={
+                    sector.status === 'success' ? '#00966E' :
+                    sector.status === 'warning' ? '#f59e0b' : '#D62612'
+                  }
+                  strokeWidth="12"
+                  strokeDasharray={`${(sector.value / sector.maxScale) * 352} 352`}
+                  strokeLinecap="round"
+                />
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-2xl font-bold text-slate-900 tabular-nums">{sector.value}%</span>
+              </div>
+            </div>
+            <div className="font-semibold text-slate-900">{sector.name}</div>
+            <div className={`text-sm flex items-center justify-center gap-1.5 mt-1 ${
+              sector.status === 'success' ? 'text-accent-600' :
+              sector.status === 'warning' ? 'text-warning-600' : 'text-danger-600'
+            }`}>
+              {sector.status === 'success' ? <Icons.Check /> : <Icons.Alert />}
+              {sector.targetLabel}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MaastrichtCriteria() {
+  const criteria = [
+    { name: 'Бюджетен дефицит', threshold: '<= 3.0%', value: '3.0%', status: 'ok' },
+    { name: 'Държавен дълг', threshold: '<= 60%', value: '31.3%', status: 'ok' },
+    { name: 'Инфлация (ХИПЦ)', threshold: '<= референтна', value: '3.5%', status: 'warning' },
+    { name: 'Валутен курс', threshold: 'ERM II стабилен', value: 'Фиксиран', status: 'ok' },
+  ];
+
+  return (
+    <div className="card p-6">
+      <h2 className="text-lg font-semibold text-slate-900 mb-6">Маастрихтски критерии</h2>
+      <div className="space-y-3">
+        {criteria.map((item, i) => (
+          <div key={i} className="criteria-item">
+            <div className="flex items-center gap-4">
+              <div className={`criteria-status ${
+                item.status === 'ok' ? 'criteria-status-ok' : 'criteria-status-warning'
+              }`}>
+                {item.status === 'ok' ? <Icons.Check /> : <Icons.Alert />}
+              </div>
+              <div>
+                <div className="font-medium text-slate-900">{item.name}</div>
+                <div className="text-sm text-slate-500">{item.threshold}</div>
+              </div>
+            </div>
+            <div className={`text-lg font-bold tabular-nums ${
+              item.status === 'ok' ? 'text-accent-600' : 'text-warning-600'
+            }`}>
+              {item.value}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -185,12 +322,12 @@ function SummaryView() {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Hero Section */}
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-4">
-          <Icons.Sparkles />
+      <div className="text-center mb-10">
+        <span className="badge badge-info badge-lg mb-4">
+          <Icons.Info />
           Сравнителен анализ
-        </div>
-        <h1 className="text-4xl font-bold text-slate-900 font-display mb-3">
+        </span>
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
           Бюджет 2026
         </h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto">
@@ -199,7 +336,7 @@ function SummaryView() {
       </div>
 
       {/* Key Metrics Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-stagger">
         {summaryMetrics.map((metric, i) => (
           <MetricCard key={i} {...metric} />
         ))}
@@ -210,7 +347,7 @@ function SummaryView() {
 
       {/* Key Findings */}
       <div>
-        <h2 className="text-xl font-bold text-slate-900 font-display mb-4">Ключови констатации</h2>
+        <h2 className="text-lg font-semibold text-slate-900 mb-4">Ключови констатации</h2>
         <div className="grid md:grid-cols-2 gap-4">
           {keyFindings.map((finding, i) => (
             <FindingCard key={i} finding={finding} />
@@ -219,102 +356,29 @@ function SummaryView() {
       </div>
 
       {/* Sectoral Comparison */}
-      <div className="card p-6">
-        <h2 className="text-xl font-bold text-slate-900 font-display mb-6">Секторни разходи (% от БВП)</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="relative w-32 h-32 mx-auto mb-4">
-              <svg className="w-full h-full transform -rotate-90">
-                <circle cx="64" cy="64" r="56" fill="none" stroke="#e2e8f0" strokeWidth="12" />
-                <circle cx="64" cy="64" r="56" fill="none" stroke="#10b981" strokeWidth="12"
-                  strokeDasharray={`${(2.05/3) * 352} 352`} strokeLinecap="round" />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-2xl font-bold text-slate-900 font-display">2.05%</span>
-              </div>
-            </div>
-            <div className="font-semibold text-slate-900">Отбрана</div>
-            <div className="text-sm text-accent-600 flex items-center justify-center gap-1 mt-1">
-              <Icons.Check /> НАТО: 2.0%
-            </div>
-          </div>
-
-          <div className="text-center">
-            <div className="relative w-32 h-32 mx-auto mb-4">
-              <svg className="w-full h-full transform -rotate-90">
-                <circle cx="64" cy="64" r="56" fill="none" stroke="#e2e8f0" strokeWidth="12" />
-                <circle cx="64" cy="64" r="56" fill="none" stroke="#f59e0b" strokeWidth="12"
-                  strokeDasharray={`${(4.8/7) * 352} 352`} strokeLinecap="round" />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-2xl font-bold text-slate-900 font-display">4.8%</span>
-              </div>
-            </div>
-            <div className="font-semibold text-slate-900">Образование</div>
-            <div className="text-sm text-warning-600 flex items-center justify-center gap-1 mt-1">
-              <Icons.Alert /> ЕС: 5.0%
-            </div>
-          </div>
-
-          <div className="text-center">
-            <div className="relative w-32 h-32 mx-auto mb-4">
-              <svg className="w-full h-full transform -rotate-90">
-                <circle cx="64" cy="64" r="56" fill="none" stroke="#e2e8f0" strokeWidth="12" />
-                <circle cx="64" cy="64" r="56" fill="none" stroke="#f43f5e" strokeWidth="12"
-                  strokeDasharray={`${(5.3/10) * 352} 352`} strokeLinecap="round" />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-2xl font-bold text-slate-900 font-display">5.3%</span>
-              </div>
-            </div>
-            <div className="font-semibold text-slate-900">Здравеопазване</div>
-            <div className="text-sm text-danger-600 flex items-center justify-center gap-1 mt-1">
-              <Icons.Alert /> ЕС: 7.5%
-            </div>
-          </div>
-        </div>
-      </div>
+      <SectorComparison />
 
       {/* Maastricht Criteria */}
-      <div className="card p-6">
-        <h2 className="text-xl font-bold text-slate-900 font-display mb-6">Маастрихтски критерии</h2>
-        <div className="space-y-4">
-          {[
-            { name: 'Бюджетен дефицит', threshold: '≤ 3.0%', value: '3.0%', status: 'ok' },
-            { name: 'Държавен дълг', threshold: '≤ 60%', value: '31.3%', status: 'ok' },
-            { name: 'Инфлация (ХИПЦ)', threshold: '≤ референтна', value: '3.5%', status: 'warning' },
-            { name: 'Валутен курс', threshold: 'ERM II стабилен', value: 'Фиксиран', status: 'ok' },
-          ].map((item, i) => (
-            <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors">
-              <div className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                  item.status === 'ok'
-                    ? 'bg-accent-100 text-accent-600'
-                    : 'bg-warning-100 text-warning-600'
-                }`}>
-                  {item.status === 'ok' ? <Icons.Check /> : <Icons.Alert />}
-                </div>
-                <div>
-                  <div className="font-medium text-slate-900">{item.name}</div>
-                  <div className="text-sm text-slate-500">{item.threshold}</div>
-                </div>
-              </div>
-              <div className={`text-lg font-bold font-display ${
-                item.status === 'ok' ? 'text-accent-600' : 'text-warning-600'
-              }`}>
-                {item.value}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <MaastrichtCriteria />
 
       {/* Footer note */}
-      <div className="text-center text-sm text-slate-500 py-4">
-        Анализът е фактологичен и не съдържа политически оценки.
-        <br />
-        Данни: Министерство на финансите | Дата: 08.12.2025
+      <div className="text-center text-sm text-slate-500 py-6 border-t border-slate-200">
+        <p>Анализът е фактологичен и не съдържа политически оценки.</p>
+        <p className="mt-1">Данни: Министерство на финансите | Дата: 08.12.2025</p>
       </div>
+    </div>
+  );
+}
+
+// Bulgarian Flag Component
+function BulgarianFlag({ className = "w-10 h-10" }) {
+  return (
+    <div className={`flag-bulgaria rounded-lg overflow-hidden shadow-sm ${className}`}>
+      <div className="bg-white h-1/3"></div>
+      <div className="bg-[#00966E] h-1/3 flex items-center justify-center">
+        <span className="text-white font-bold text-xs">BG</span>
+      </div>
+      <div className="bg-[#D62612] h-1/3"></div>
     </div>
   );
 }
@@ -329,28 +393,16 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      {/* Decorative background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-soft" />
-        <div className="absolute top-1/2 -left-40 w-80 h-80 bg-accent-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-soft" style={{ animationDelay: '1s' }} />
-      </div>
-
+    <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <header className="sticky top-0 z-50 glass border-b border-slate-200/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header className="site-header sticky top-0 z-sticky">
+        <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg flex flex-col">
-                <div className="flex-1 bg-white"></div>
-                <div className="flex-1 bg-[#00966E] flex items-center justify-center">
-                  <span className="text-white font-bold text-xs font-display">BG</span>
-                </div>
-                <div className="flex-1 bg-[#D62612]"></div>
-              </div>
+              <BulgarianFlag className="w-10 h-10" />
               <div className="hidden sm:block">
-                <h1 className="text-lg font-bold text-slate-900 font-display">Бюджет 2026</h1>
+                <h1 className="text-lg font-bold text-slate-900">Бюджет 2026</h1>
                 <p className="text-xs text-slate-500">Сравнителен анализ</p>
               </div>
             </div>
@@ -374,8 +426,8 @@ export default function App() {
 
             {/* Version badge */}
             <div className="hidden md:flex items-center">
-              <span className="badge badge-info">
-                v. Декември 2025
+              <span className="badge badge-neutral">
+                Декември 2025
               </span>
             </div>
           </div>
@@ -383,31 +435,25 @@ export default function App() {
       </header>
 
       {/* Main Content */}
-      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeView === 'charts' && <BudgetVisualizations />}
         {activeView === 'summary' && <SummaryView />}
         {activeView === 'full' && <FullAnalysis />}
       </main>
 
       {/* Footer */}
-      <footer className="relative border-t border-slate-200/50 bg-white/50 backdrop-blur">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <footer className="site-footer">
+        <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg overflow-hidden shadow flex flex-col">
-                <div className="flex-1 bg-white"></div>
-                <div className="flex-1 bg-[#00966E] flex items-center justify-center">
-                  <span className="text-white font-bold text-[8px] font-display">BG</span>
-                </div>
-                <div className="flex-1 bg-[#D62612]"></div>
-              </div>
+              <BulgarianFlag className="w-8 h-8" />
               <div className="text-sm text-slate-600">
                 Проект на Закон за държавния бюджет на Република България за 2026 г.
               </div>
             </div>
             <div className="flex items-center gap-6 text-sm text-slate-500">
               <span>Данни: Министерство на финансите</span>
-              <span className="hidden sm:inline">|</span>
+              <span className="hidden sm:inline text-slate-300">|</span>
               <span>Версия от 05.12.2025</span>
             </div>
           </div>
