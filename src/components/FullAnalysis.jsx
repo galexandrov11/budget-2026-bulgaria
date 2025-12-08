@@ -1,4 +1,14 @@
 import React, { useState } from 'react';
+import {
+  RevenuePieChart,
+  ExpenditurePieChart,
+  MinistryChangesBarChart,
+  DeficitLineChart,
+  DebtBarChart,
+  MacroIndicatorsBarChart,
+  MaastrichtCriteriaVisualization,
+  SectorsComparisonBarChart
+} from './BudgetVisualizations';
 
 // Data Tables
 const mainIndicators = [
@@ -530,6 +540,11 @@ export default function FullAnalysis() {
             Най-съществените намаления са при ДДС (-600 млн., -4,00%), корпоративен данък (-220 млн., -5,68%)
             и ДДФЛ (-183,5 млн., -3,73%). Единственото значително увеличение е при акцизите (+75 млн., +1,80%).
           </Comment>
+
+          {/* Revenue Pie Chart */}
+          <div className="mt-8 card p-6">
+            <RevenuePieChart height={350} />
+          </div>
         </Section>
 
         {/* III. РАЗХОДИ */}
@@ -542,6 +557,11 @@ export default function FullAnalysis() {
             Капиталовите разходи са намалени значително (-481 млн. евро, -16,28%).
             Резервът за непредвидени разходи остава непроменен.
           </Comment>
+
+          {/* Expenditure Pie Chart */}
+          <div className="mt-8 card p-6">
+            <ExpenditurePieChart height={350} />
+          </div>
         </Section>
 
         {/* IV. ТРАНСФЕРИ */}
@@ -635,6 +655,11 @@ export default function FullAnalysis() {
               Целта от 3,0% от БВП се отнася за КФП като цяло, която включва и други бюджети (общини, ДОО, НЗОК и др.).
             </p>
           </SubSection>
+
+          {/* Deficit Line Chart */}
+          <div className="mt-8 card p-6">
+            <DeficitLineChart height={350} />
+          </div>
         </Section>
 
         {/* VI. ВЕДОМСТВА */}
@@ -658,6 +683,11 @@ export default function FullAnalysis() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Ministry Changes Bar Chart */}
+          <div className="mt-8 card p-6">
+            <MinistryChangesBarChart height={350} />
           </div>
         </Section>
 
@@ -727,6 +757,11 @@ export default function FullAnalysis() {
               Източник: Министерство на финансите, Средносрочна бюджетна прогноза 2026-2028, декември 2025
             </p>
           </SubSection>
+
+          {/* Macro Indicators Bar Chart */}
+          <div className="mt-8 card p-6">
+            <MacroIndicatorsBarChart height={300} />
+          </div>
         </Section>
 
         {/* XI. ЕС ИЗИСКВАНИЯ */}
@@ -795,6 +830,16 @@ export default function FullAnalysis() {
               </p>
             </div>
           </SubSection>
+
+          {/* Maastricht Criteria Visualization */}
+          <div className="mt-8 card p-6">
+            <MaastrichtCriteriaVisualization />
+          </div>
+
+          {/* Debt Bar Chart */}
+          <div className="mt-8 card p-6">
+            <DebtBarChart height={300} />
+          </div>
         </Section>
 
         {/* XII. СЕКТОРИ */}
@@ -830,6 +875,11 @@ export default function FullAnalysis() {
               data={sectorComparison}
             />
           </SubSection>
+
+          {/* Sectors Comparison Bar Chart */}
+          <div className="mt-8 card p-6">
+            <SectorsComparisonBarChart height={350} />
+          </div>
         </Section>
 
         {/* XIII. ДАНЪЧНО ЗАКОНОДАТЕЛСТВО */}

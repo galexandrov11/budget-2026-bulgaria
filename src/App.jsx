@@ -403,7 +403,6 @@ export default function App() {
 
   const views = [
     { id: 'charts', label: 'Графики', icon: Icons.Chart },
-    { id: 'summary', label: 'Резюме', icon: Icons.Document },
     { id: 'full', label: 'Пълен текст', icon: Icons.Book },
   ];
 
@@ -452,7 +451,6 @@ export default function App() {
       {/* Main Content */}
       <main className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeView === 'charts' && <BudgetVisualizations />}
-        {activeView === 'summary' && <SummaryView />}
         {activeView === 'full' && <FullAnalysis />}
       </main>
 
