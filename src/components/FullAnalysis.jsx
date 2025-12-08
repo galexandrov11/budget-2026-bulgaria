@@ -170,30 +170,167 @@ const municipalityRegions = [
   { region: "ЯМБОЛ", count: 4, november: "77 865,9", december: "77 426,6", change: "-439,3", percent: "-0.56%" }
 ];
 
+// Utility functions for number formatting
+function formatBulgarianNumber(value) {
+  // Bulgarian format uses space as thousand separator and comma as decimal
+  // The data already comes in Bulgarian format, but we ensure proper spacing
+  if (typeof value !== 'string') return value;
+
+  // If it's already formatted, clean it up for consistent spacing
+  // Handle negative numbers with proper minus sign placement
+  const cleaned = value.trim();
+
+  // Check if it's a number-like string
+  if (/^[+-]?[\d\s,\.]+[%]?$/.test(cleaned)) {
+    return cleaned;
+  }
+
+  return value;
+}
+
+function getValueType(value) {
+  // Determine if value is positive, negative, or neutral
+  if (typeof value !== 'string') return 'neutral';
+
+  const cleaned = value.trim();
+
+  // Check for explicit positive/negative indicators
+  if (cleaned.startsWith('+')) return 'positive';
+  if (cleaned.startsWith('-')) return 'negative';
+
+  // Check for zero values
+  if (/^0[,.]?0*%?$/.test(cleaned) || cleaned === '0,0' || cleaned === '0,00%') {
+    return 'neutral';
+  }
+
+  return 'neutral';
+}
+
+function isChangeColumn(header) {
+  // Detect if this column contains change values
+  const changeKeywords = ['Промяна', 'Change', 'промяна', 'Разлика', 'diff'];
+  return changeKeywords.some(kw => header.toLowerCase().includes(kw.toLowerCase()));
+}
+
+function isPercentColumn(header) {
+  // Detect if this column contains percentage values
+  return header.includes('%') || header.toLowerCase().includes('percent');
+}
+
+// Arrow indicators for changes
+function ChangeIndicator({ value, showArrow = true }) {
+  const type = getValueType(value);
+
+  if (type === 'neutral') {
+    return <span className="value-neutral">{value}</span>;
+  }
+
+  const isPositive = type === 'positive';
+  const colorClass = isPositive ? 'value-positive' : 'value-negative';
+
+  return (
+    <span className={`change-indicator ${colorClass}`}>
+      {showArrow && (
+        <span className="inline-block w-4" aria-hidden="true">
+          {isPositive ? '\u25B2' : '\u25BC'}
+        </span>
+      )}
+      <span>{value}</span>
+    </span>
+  );
+}
+
+// Percent badge component
+function PercentBadge({ value }) {
+  const type = getValueType(value);
+
+  let badgeClass = 'percent-badge-neutral';
+  if (type === 'positive') badgeClass = 'percent-badge-positive';
+  if (type === 'negative') badgeClass = 'percent-badge-negative';
+
+  return (
+    <span className={`percent-badge ${badgeClass}`}>
+      {value}
+    </span>
+  );
+}
+
 // Components
 function DataTable({ headers, data, className = "" }) {
+  // Identify which columns are change or percent columns
+  const changeColumnIndices = headers.map((h, i) => ({ index: i, isChange: isChangeColumn(h), isPercent: isPercentColumn(h) }));
+
   return (
-    <div className={`overflow-x-auto ${className}`}>
+    <div className={`table-modern-container ${className}`}>
       <table className="table-modern">
         <thead>
           <tr>
             {headers.map((h, i) => (
-              <th key={i} className={i > 0 ? 'text-right' : ''}>
+              <th key={i}>
                 {h}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {data.map((row, i) => (
-            <tr key={i} className={`${row.isTotal ? 'bg-slate-50 font-semibold' : ''} ${row.highlight ? 'bg-danger-50/50' : ''}`}>
-              {Object.keys(row).filter(k => !['isTotal', 'highlight', 'indent', 'type', 'note'].includes(k)).map((key, j) => (
-                <td key={j} className={`${j > 0 ? 'text-right tabular-nums' : 'text-slate-900'} ${row.indent && j === 0 ? 'pl-6 text-slate-600' : ''}`}>
-                  {row[key]}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {data.map((row, rowIndex) => {
+            // Get row classes based on row properties
+            const rowClasses = [
+              row.isTotal ? 'row-total' : '',
+              row.highlight ? 'row-highlight' : '',
+              row.indent ? 'row-indent' : ''
+            ].filter(Boolean).join(' ');
+
+            // Get the values to display (filter out metadata properties)
+            const displayKeys = Object.keys(row).filter(k =>
+              !['isTotal', 'highlight', 'indent', 'type', 'note'].includes(k)
+            );
+
+            return (
+              <tr key={rowIndex} className={rowClasses}>
+                {displayKeys.map((key, colIndex) => {
+                  const value = row[key];
+                  const columnInfo = changeColumnIndices[colIndex];
+                  const isChangeCol = columnInfo?.isChange;
+                  const isPercentCol = columnInfo?.isPercent;
+
+                  // First column is always the label
+                  if (colIndex === 0) {
+                    return (
+                      <td key={colIndex}>
+                        {value}
+                      </td>
+                    );
+                  }
+
+                  // Percent columns get badges
+                  if (isPercentCol) {
+                    return (
+                      <td key={colIndex} className="cell-number">
+                        <PercentBadge value={value} />
+                      </td>
+                    );
+                  }
+
+                  // Change columns get colored indicators
+                  if (isChangeCol) {
+                    return (
+                      <td key={colIndex} className="cell-number">
+                        <ChangeIndicator value={value} showArrow={true} />
+                      </td>
+                    );
+                  }
+
+                  // Regular numeric columns
+                  return (
+                    <td key={colIndex} className="cell-number">
+                      {formatBulgarianNumber(value)}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -457,28 +594,38 @@ export default function FullAnalysis() {
           </SubSection>
 
           <SubSection title="5.3. Сравнение с целевия дефицит по КФП">
-            <div className="overflow-x-auto">
+            <div className="table-modern-container">
               <table className="table-modern">
                 <thead>
                   <tr>
                     <th>Показател</th>
-                    <th className="text-right">Цел (КФП)</th>
-                    <th className="text-right">ДБ Ноември</th>
-                    <th className="text-right">ДБ Декември</th>
+                    <th>Цел (КФП)</th>
+                    <th>ДБ Ноември</th>
+                    <th>ДБ Декември</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="text-slate-900">Дефицит (% от БВП)</td>
-                    <td className="text-right font-bold text-accent-600 tabular-nums">3,00%</td>
-                    <td className="text-right text-warning-600 tabular-nums">3,21%</td>
-                    <td className="text-right text-danger-600 tabular-nums">3,81%</td>
+                    <td>Дефицит (% от БВП)</td>
+                    <td className="cell-number">
+                      <span className="percent-badge percent-badge-positive">3,00%</span>
+                    </td>
+                    <td className="cell-number">
+                      <span className="percent-badge percent-badge-warning">3,21%</span>
+                    </td>
+                    <td className="cell-number">
+                      <span className="percent-badge percent-badge-negative">3,81%</span>
+                    </td>
                   </tr>
                   <tr>
-                    <td className="text-slate-900">Отклонение от целта</td>
-                    <td className="text-right text-slate-400">---</td>
-                    <td className="text-right tabular-nums">+0,21 пр.п.</td>
-                    <td className="text-right font-bold text-danger-600 tabular-nums">+0,81 пр.п.</td>
+                    <td>Отклонение от целта</td>
+                    <td className="cell-number value-neutral">---</td>
+                    <td className="cell-number">
+                      <ChangeIndicator value="+0,21 пр.п." showArrow={false} />
+                    </td>
+                    <td className="cell-number">
+                      <ChangeIndicator value="+0,81 пр.п." showArrow={false} />
+                    </td>
                   </tr>
                 </tbody>
               </table>

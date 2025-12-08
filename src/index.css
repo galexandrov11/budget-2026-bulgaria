@@ -333,6 +333,184 @@
   }
 
   /* --------------------------------------------------------------------------
+     Modern Data Tables - For Financial/Budget Data
+     Optimized for Bulgarian number formatting and readability
+     -------------------------------------------------------------------------- */
+
+  .table-modern {
+    @apply w-full text-sm border-collapse;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Table container for overflow handling */
+  .table-modern-container {
+    @apply overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-card;
+  }
+
+  /* Header styling - strong visual hierarchy */
+  .table-modern thead {
+    @apply bg-gradient-to-b from-slate-100 to-slate-50;
+  }
+
+  .table-modern thead tr {
+    @apply border-b-2 border-slate-200;
+  }
+
+  .table-modern th {
+    @apply px-5 py-4 text-xs font-bold text-slate-700 uppercase tracking-wider whitespace-nowrap;
+    letter-spacing: 0.05em;
+  }
+
+  .table-modern th:first-child {
+    @apply text-left;
+  }
+
+  .table-modern th:not(:first-child) {
+    @apply text-right;
+  }
+
+  /* Body rows - alternating backgrounds */
+  .table-modern tbody tr {
+    @apply transition-colors duration-150;
+  }
+
+  .table-modern tbody tr:nth-child(odd) {
+    @apply bg-white;
+  }
+
+  .table-modern tbody tr:nth-child(even) {
+    @apply bg-slate-25;
+  }
+
+  .table-modern tbody tr:hover {
+    @apply bg-gov-50/50;
+  }
+
+  /* Cell styling - proper spacing and alignment */
+  .table-modern td {
+    @apply px-5 py-3.5 text-slate-700 border-b border-slate-100;
+    line-height: 1.5;
+  }
+
+  .table-modern td:first-child {
+    @apply text-left font-medium text-slate-900;
+  }
+
+  .table-modern td:not(:first-child) {
+    @apply text-right font-mono text-sm;
+  }
+
+  .table-modern tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  /* Total row styling */
+  .table-modern tr.row-total {
+    @apply bg-slate-100 font-semibold;
+  }
+
+  .table-modern tr.row-total td {
+    @apply border-t-2 border-slate-300 text-slate-900 py-4;
+  }
+
+  /* Highlight row (e.g., deficit row) */
+  .table-modern tr.row-highlight {
+    @apply bg-danger-50;
+  }
+
+  .table-modern tr.row-highlight td {
+    @apply text-danger-800 font-semibold;
+  }
+
+  /* Indented rows for sub-items */
+  .table-modern tr.row-indent td:first-child {
+    @apply pl-10 text-slate-600 font-normal;
+  }
+
+  /* Numeric value styling */
+  .table-modern .cell-number {
+    @apply font-mono tabular-nums text-right tracking-tight;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+
+  /* Positive/negative value colors */
+  .table-modern .value-positive {
+    @apply text-accent-700 font-medium;
+  }
+
+  .table-modern .value-negative {
+    @apply text-danger-600 font-medium;
+  }
+
+  .table-modern .value-neutral {
+    @apply text-slate-500;
+  }
+
+  /* Change indicators with icons */
+  .table-modern .change-indicator {
+    @apply inline-flex items-center gap-1;
+  }
+
+  .table-modern .change-indicator-positive {
+    @apply text-accent-700;
+  }
+
+  .table-modern .change-indicator-negative {
+    @apply text-danger-600;
+  }
+
+  /* Percent badges */
+  .table-modern .percent-badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold;
+  }
+
+  .table-modern .percent-badge-positive {
+    @apply bg-accent-100 text-accent-800;
+  }
+
+  .table-modern .percent-badge-negative {
+    @apply bg-danger-100 text-danger-800;
+  }
+
+  .table-modern .percent-badge-neutral {
+    @apply bg-slate-100 text-slate-600;
+  }
+
+  .table-modern .percent-badge-warning {
+    @apply bg-warning-100 text-warning-800;
+  }
+
+  /* Responsive: horizontal scroll on mobile */
+  @media (max-width: 768px) {
+    .table-modern th,
+    .table-modern td {
+      @apply px-3 py-3 text-xs;
+    }
+
+    .table-modern th:first-child,
+    .table-modern td:first-child {
+      @apply sticky left-0 bg-inherit z-10;
+      box-shadow: 2px 0 4px -1px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  /* Print styles for tables */
+  @media print {
+    .table-modern {
+      @apply text-xs;
+    }
+
+    .table-modern th,
+    .table-modern td {
+      @apply px-2 py-2;
+    }
+
+    .table-modern tbody tr:hover {
+      @apply bg-transparent;
+    }
+  }
+
+  /* --------------------------------------------------------------------------
      Navigation - Tabs and navigation elements
      -------------------------------------------------------------------------- */
 
