@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import BudgetVisualizations from './components/BudgetVisualizations';
+import React from 'react';
 import FullAnalysis from './components/FullAnalysis';
 
 // Icons - Simple, professional SVG icons
@@ -399,13 +398,6 @@ function BulgarianFlag({ className = "w-10 h-10" }) {
 }
 
 export default function App() {
-  const [activeView, setActiveView] = useState('charts');
-
-  const views = [
-    { id: 'charts', label: 'Графики', icon: Icons.Chart },
-    { id: 'full', label: 'Пълен текст', icon: Icons.Book },
-  ];
-
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -421,25 +413,8 @@ export default function App() {
               </div>
             </div>
 
-            {/* Navigation Tabs */}
-            <nav className="tab-group">
-              {views.map((view) => {
-                const IconComponent = view.icon;
-                return (
-                  <button
-                    key={view.id}
-                    onClick={() => setActiveView(view.id)}
-                    className={`tab ${activeView === view.id ? 'tab-active' : 'tab-inactive'}`}
-                  >
-                    <IconComponent />
-                    <span className="hidden sm:inline">{view.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
-
             {/* Version badge */}
-            <div className="hidden md:flex items-center">
+            <div className="flex items-center">
               <span className="badge badge-neutral">
                 Декември 2025
               </span>
@@ -450,8 +425,7 @@ export default function App() {
 
       {/* Main Content */}
       <main className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeView === 'charts' && <BudgetVisualizations />}
-        {activeView === 'full' && <FullAnalysis />}
+        <FullAnalysis />
       </main>
 
       {/* Footer */}
