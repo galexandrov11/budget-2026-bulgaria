@@ -464,24 +464,116 @@ export default function FullAnalysis() {
 
         {/* УВОД */}
         <Section id="intro" title="УВОД">
-          <div className="prose prose-slate max-w-none mb-6 text-slate-600 leading-relaxed">
-            <p className="mb-4">
-              Настоящият анализ разглежда проекта на Закон за държавния бюджет на Република България за 2026 г. —
-              първият бюджет на страната, изцяло деноминиран в евро след планираното присъединяване към еврозоната на 1 януари 2026 г.
-            </p>
-            <p>
-              Анализът съпоставя две версии на законопроекта: първоначалната от 2 ноември 2025 г., която беше оттеглена
-              след протести и критики от страна на бизнеса и синдикатите, и преработената версия от 5 декември 2025 г.,
-              съгласувана с работодателски организации и синдикати в рамките на тристранния диалог.
-            </p>
-          </div>
 
-          <SubSection title="Обхват на анализа">
+          <SubSection title="За този анализ">
+            <p className="text-slate-600 leading-relaxed">
+              Настоящият анализ е изготвен от <strong>Claude</strong> (Anthropic, модел Claude Opus 4.5) в рамките на
+              интерактивна сесия с потребителя. Анализът е създаден на 8 декември 2025 г. и представлява сравнителен
+              преглед на две версии на проекта за Закон за държавния бюджет на Република България за 2026 г.
+            </p>
+          </SubSection>
+
+          <SubSection title="Източници на данни">
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold text-slate-800 mb-2">Първични източници (предоставени от потребителя):</h4>
+                <ul className="space-y-1 text-slate-600 text-sm">
+                  {[
+                    "Проект на ЗДБРБ 2026 — версия от 02.11.2025 г. (3-PZDBRB-2026-02_11_25.pdf)",
+                    "Проект на ЗДБРБ 2026 — версия от 05.12.2025 г. (3_PZDBRB_2026_-_05_12_2025.pdf)",
+                    "Приложение № 2 към чл. 51 — Трансфери за ВУЗ (3_1_Pril_2__PZDBRB_2026.pdf)",
+                    "Приложение № 3 към чл. 52 — Трансфери за общини (3_2_Pril_3_-_PZDBRB_2026.pdf)"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="w-1 h-1 rounded-full bg-gov-400 mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-slate-800 mb-2">Допълнителни източници (уеб търсене):</h4>
+                <ul className="space-y-1 text-slate-600 text-sm">
+                  {[
+                    "Есенна макроикономическа прогноза на Европейската комисия (ноември 2025)",
+                    "OECD Economic Outlook — Bulgaria (2025)",
+                    "Съобщения на БТА относно бюджетния процес",
+                    "Министерство на финансите — официални съобщения"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="w-1 h-1 rounded-full bg-gov-400 mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </SubSection>
+
+          <SubSection title="Използвани инструменти">
+            <div className="card overflow-hidden">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-200">
+                    <th className="text-left p-3 font-semibold text-slate-700">Инструмент</th>
+                    <th className="text-left p-3 font-semibold text-slate-700">Приложение</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {[
+                    { tool: "Извличане на текст от PDF", use: "Парсване на бюджетните документи и приложенията" },
+                    { tool: "Уеб търсене", use: "Макроикономически данни, прогнози на ЕК и ОИСР" },
+                    { tool: "docx библиотека (Node.js)", use: "Генериране на Word документ с таблици и форматиране" },
+                    { tool: "Recharts (React)", use: "Създаване на интерактивни визуализации" },
+                    { tool: "Bash/JavaScript", use: "Обработка и структуриране на данните" }
+                  ].map((row, i) => (
+                    <tr key={i} className="hover:bg-slate-50/50">
+                      <td className="p-3 text-slate-700 font-medium">{row.tool}</td>
+                      <td className="p-3 text-slate-600">{row.use}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </SubSection>
+
+          <SubSection title="Настройки на анализа">
+            <p className="text-slate-600 mb-3">Анализът е извършен със следните параметри, зададени от потребителя:</p>
+            <ul className="space-y-2 text-slate-600 text-sm">
+              {[
+                { label: "Валута", value: "Всички стойности са в хиляди евро (хил. €), конвертирани по фиксиран курс 1 EUR = 1,95583 BGN" },
+                { label: "Значителна промяна", value: "Над ±5% или над ±50 000 хил. €" },
+                { label: "Стил", value: "Неутрален, фактологичен — без политически оценки и без анализ на рискове (поради субективност)" },
+                { label: "Изключения", value: "Без исторически контекст (сравнение с предходни години), без регионален анализ по области" }
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="w-1 h-1 rounded-full bg-gov-400 mt-2 flex-shrink-0" />
+                  <span><strong className="text-slate-700">{item.label}:</strong> {item.value}</span>
+                </li>
+              ))}
+            </ul>
+          </SubSection>
+
+          <SubSection title="Контекст">
+            <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed">
+              <p className="mb-3">
+                Бюджет 2026 е първият бюджет на България, изцяло деноминиран в евро след планираното присъединяване
+                към еврозоната на 1 януари 2026 г.
+              </p>
+              <p>
+                Анализът съпоставя две версии на законопроекта: първоначалната от 2 ноември 2025 г., която беше
+                оттеглена след протести и критики от страна на бизнеса и синдикатите, и преработената версия от
+                5 декември 2025 г., съгласувана в рамките на тристранния диалог.
+              </p>
+            </div>
+          </SubSection>
+
+          <SubSection title="Обхват">
             <ul className="space-y-2 text-slate-600">
               {[
                 "Сравнение на приходната и разходната част между двете версии",
                 "Детайлен преглед по министерства и ведомства",
-                "Трансфери към висши учебни заведения и общини",
+                "Трансфери към висши учебни заведения (37 ВУЗ) и общини (262 общини)",
                 "Макроикономически предпоставки и съответствие с ЕС изисквания",
                 "Секторен анализ (отбрана, образование, здравеопазване)",
                 "Промени в данъчното и осигурителното законодателство"
@@ -497,7 +589,7 @@ export default function FullAnalysis() {
           <SubSection title="Ключови констатации">
             <div className="space-y-3">
               <KeyFinding type="warning" title="Дефицитът се увеличава">
-                от 3 859 млн. € (ноември) на 4 575 млн. € (декември), което е ръст от 18,5%.
+                от 3 859 млн. € (ноември) на 4 575 млн. € (декември), ръст от 18,5%.
               </KeyFinding>
               <KeyFinding type="info" title="Данъчни отстъпки">
                 Отпада увеличението на данъка върху дивидентите (остава 5%), въвежда се 25% данъчно облекчение за R&D разходи.
@@ -514,11 +606,20 @@ export default function FullAnalysis() {
             </div>
           </SubSection>
 
-          <div className="mt-6 p-4 bg-slate-100 rounded-xl text-sm text-slate-600 italic">
-            <strong className="text-slate-700">Бележка:</strong> Анализът е фактологичен и не съдържа политически оценки.
-            Бюджетите на ДОО (НОИ) и НЗОК се приемат с отделни закони и не са предмет на настоящия документ,
-            макар да са отразени в консолидираните показатели.
-          </div>
+          <SubSection title="Ограничения">
+            <ul className="space-y-2 text-slate-600 text-sm">
+              {[
+                "Бюджетите на ДОО (НОИ) и НЗОК се приемат с отделни закони и не са предмет на детайлен анализ, макар да са отразени в консолидираните показатели",
+                "Анализът е базиран на проектозакона; окончателният закон може да съдържа промени след гласуване в Народното събрание",
+                "Някои данни (напр. секторни дялове от БВП) са изчислени приблизително на база прогнозен номинален БВП"
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="w-1 h-1 rounded-full bg-warning-500 mt-2 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </SubSection>
         </Section>
 
         {/* I. ОБОБЩЕНИЕ НА ОСНОВНИ ПОКАЗАТЕЛИ */}
