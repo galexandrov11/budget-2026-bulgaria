@@ -914,12 +914,13 @@ export default function FullAnalysis() {
           <SubSection title="11.2. Динамика на държавния дълг">
             <DataTable
               headers={["Показател", "2026", "2027", "2028"]}
-              data={debtDynamics.map(d => ({
-                indicator: "Държавен дълг",
-                y2026: `${d.debt} млрд. € (${d.percent})`,
-                y2027: `${d.debt} млрд. €`,
-                y2028: d.debt + " млрд. €"
-              }))}
+              data={[
+                { indicator: "Държавен дълг (млрд. €)", y2026: debtDynamics[0].debt, y2027: debtDynamics[1].debt, y2028: debtDynamics[2].debt },
+                { indicator: "Дълг като % от БВП", y2026: debtDynamics[0].percent, y2027: debtDynamics[1].percent, y2028: debtDynamics[2].percent },
+                { indicator: "Лимит за нов дълг", y2026: debtDynamics[0].newDebt, y2027: debtDynamics[1].newDebt, y2028: debtDynamics[2].newDebt },
+                { indicator: "SAFE инструмент", y2026: debtDynamics[0].safe, y2027: debtDynamics[1].safe, y2028: debtDynamics[2].safe },
+                { indicator: "Буферен резерв", y2026: debtDynamics[0].reserve, y2027: debtDynamics[1].reserve, y2028: debtDynamics[2].reserve }
+              ]}
             />
             <p className="mt-3 text-xs text-slate-400">
               SAFE: Security Action for Europe — механизъм на ЕС за укрепване на европейската отбранителна индустрия.
