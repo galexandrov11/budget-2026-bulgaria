@@ -55,13 +55,99 @@ const transfers = [
   { name: "ОБЩО предоставени", november: "16 261 440,2", december: "16 489 618,1", change: "+228 177,9", percent: "+1,40%", isTotal: true }
 ];
 
+// Detailed ministry breakdowns for Section VI
+const ministryDetails = [
+  {
+    title: "6.1. Министерство на финансите",
+    subtitle: "+13 920,1 хил. €, +2,98%",
+    type: "increase",
+    rows: [
+      { name: "Персонал", november: "333 748,7", december: "347 668,8", change: "+13 920,1", percent: "+4,17%" },
+      { name: "Капиталови разходи", november: "23 704,6", december: "23 704,6", change: "0,0", percent: "0,00%" },
+      { name: "ОБЩО", november: "466 536,5", december: "480 456,6", change: "+13 920,1", percent: "+2,98%", isTotal: true }
+    ],
+    conclusion: "Увеличението идва изцяло от разходи за персонал (+13,9 млн. евро, +4,17%)."
+  },
+  {
+    title: "6.2. Министерство на здравеопазването",
+    subtitle: "+70 627,1 хил. €, +10,04%",
+    type: "increase",
+    rows: [
+      { name: "Персонал", november: "342 712,3", december: "383 339,4", change: "+40 627,1", percent: "+11,86%" },
+      { name: "Субсидии за нефин. предприятия", november: "193 508,0", december: "223 508,0", change: "+30 000,0", percent: "+15,50%" },
+      { name: "Капиталови разходи", november: "46 616,3", december: "46 616,3", change: "0,0", percent: "0,00%" },
+      { name: "ОБЩО", november: "703 581,5", december: "774 208,6", change: "+70 627,1", percent: "+10,04%", isTotal: true }
+    ],
+    keyAddition: "В декемврийската версия са включени целеви средства от 30 000,0 хил. евро за програма за подкрепа на лекари специализанти.",
+    conclusion: "Значително увеличение за персонал (+40,6 млн. €) и субсидии (+30 млн. €)."
+  },
+  {
+    title: "6.3. Министерство на труда и социалната политика",
+    subtitle: "+5 922,5 хил. €, +0,26%",
+    type: "increase",
+    rows: [
+      { name: "Персонал", november: "167 562,3", december: "173 484,8", change: "+5 922,5", percent: "+3,53%" },
+      { name: "Обезщетения за домакинства", november: "2 100 824,6", december: "2 100 824,6", change: "0,0", percent: "0,00%" },
+      { name: "Администрация (политика)", november: "10 371,1", december: "16 293,6", change: "+5 922,5", percent: "+57,10%" },
+      { name: "ОБЩО", november: "2 297 716,5", december: "2 303 639,0", change: "+5 922,5", percent: "+0,26%", isTotal: true }
+    ],
+    conclusion: "Увеличението е изцяло за администрацията (+5,9 млн. евро, +57,10% за персонал). Социалните плащания остават непроменени."
+  },
+  {
+    title: "6.4. Министерство на регионалното развитие",
+    subtitle: "-155 842,5 хил. €, -12,47%",
+    type: "decrease",
+    rows: [
+      { name: "Персонал", november: "75 406,5", december: "78 564,0", change: "+3 157,5", percent: "+4,19%" },
+      { name: "Капиталови разходи", november: "743 303,1", december: "584 303,1", change: "-159 000,0", percent: "-21,39%" },
+      { name: "  - Дълготрайни активи", november: "726 963,3", december: "567 963,3", change: "-159 000,0", percent: "-21,87%", indent: true },
+      { name: "Техническа инфраструктура", november: "1 209 383,8", december: "1 053 541,3", change: "-155 842,5", percent: "-12,88%" },
+      { name: "ОБЩО", november: "1 249 285,7", december: "1 093 443,2", change: "-155 842,5", percent: "-12,47%", isTotal: true }
+    ],
+    conclusion: "Най-голямото намаление в бюджета (-159 млн. евро, -21,39%) е при капиталовите разходи за техническа инфраструктура (пътища, ВиК)."
+  },
+  {
+    title: "6.5. Министерски съвет",
+    subtitle: "-8 343,2 хил. €, -5,82%",
+    type: "decrease",
+    rows: [
+      { name: "Персонал", november: "54 966,7", december: "56 623,5", change: "+1 656,8", percent: "+3,01%" },
+      { name: "Капиталови разходи", november: "33 083,1", december: "23 083,1", change: "-10 000,0", percent: "-30,22%" },
+      { name: "Държавни функции по области", november: "45 966,3", december: "39 966,3", change: "-6 000,0", percent: "-13,05%" },
+      { name: "ОБЩО", november: "143 358,3", december: "135 015,1", change: "-8 343,2", percent: "-5,82%", isTotal: true }
+    ],
+    conclusion: "Намаление основно от капиталови разходи (-30,22%) и държавни функции (-13,05%)."
+  },
+  {
+    title: "6.6. Министерство на образованието и науката",
+    subtitle: "-7 177,8 хил. €, -0,86%",
+    type: "decrease",
+    rows: [
+      { name: "Персонал", november: "510 886,9", december: "508 709,1", change: "-2 177,8", percent: "-0,43%" },
+      { name: "Капиталови разходи", november: "43 382,8", december: "38 382,8", change: "-5 000,0", percent: "-11,53%" },
+      { name: "Трансфер за БАН", november: "133 037,6", december: "137 928,4", change: "+4 890,8", percent: "+3,68%" },
+      { name: "Трансфер за ВУЗ", november: "681 687,7", december: "694 030,1", change: "+12 342,4", percent: "+1,81%" },
+      { name: "ОБЩО", november: "833 361,4", december: "826 183,6", change: "-7 177,8", percent: "-0,86%", isTotal: true }
+    ],
+    conclusion: "Въпреки общото намаление, трансферите за БАН (+3,68%) и ВУЗ (+1,81%) се увеличават — общо +17,2 млн. евро."
+  }
+];
+
+const otherAgencies = [
+  { name: "Адм. на президента", november: "7 326,1", december: "7 472,3", change: "+146,2", percent: "+2,00%" },
+  { name: "Конституционен съд", november: "8 231,0", december: "8 332,6", change: "+101,6", percent: "+1,23%" },
+  { name: "Омбудсман", november: "2 590,0", december: "2 675,7", change: "+85,7", percent: "+3,31%" },
+  { name: "МВнР", november: "115 442,6", december: "116 184,6", change: "+742,0", percent: "+0,64%" }
+];
+
+// Simple ministry data for chart
 const ministries = [
-  { name: "Министерство на здравеопазването", change: "+70 627,1", percent: "+10,04%", type: "increase", note: "Включени 30 000 хил. € за програма за лекари специализанти" },
-  { name: "Министерство на финансите", change: "+13 920,1", percent: "+2,98%", type: "increase", note: "Увеличение изцяло от разходи за персонал" },
-  { name: "Министерство на труда и соц. политика", change: "+5 922,5", percent: "+0,26%", type: "increase", note: "Увеличение за администрацията; социални плащания непроменени" },
-  { name: "Министерство на образованието", change: "-7 177,8", percent: "-0,86%", type: "decrease", note: "Трансфери за БАН и ВУЗ нарастват с +17,2 млн. €" },
-  { name: "Министерски съвет", change: "-8 343,2", percent: "-5,82%", type: "decrease", note: "Намаление на капиталови разходи -30,22%" },
-  { name: "Министерство на регионалното развитие", change: "-155 842,5", percent: "-12,47%", type: "decrease", note: "Най-голямо намаление: -159 млн. € за инфраструктура" }
+  { name: "Министерство на здравеопазването", change: "+70 627,1", percent: "+10,04%", type: "increase" },
+  { name: "Министерство на финансите", change: "+13 920,1", percent: "+2,98%", type: "increase" },
+  { name: "Министерство на труда и соц. политика", change: "+5 922,5", percent: "+0,26%", type: "increase" },
+  { name: "Министерство на образованието", change: "-7 177,8", percent: "-0,86%", type: "decrease" },
+  { name: "Министерски съвет", change: "-8 343,2", percent: "-5,82%", type: "decrease" },
+  { name: "Министерство на регионалното развитие", change: "-155 842,5", percent: "-12,47%", type: "decrease" }
 ];
 
 const universities = [
@@ -784,26 +870,40 @@ export default function FullAnalysis() {
 
         {/* VI. ВЕДОМСТВА */}
         <Section id="ministries" title="VI. ДЕТАЙЛЕН АНАЛИЗ ПО ВЕДОМСТВА">
-          <div className="space-y-3">
-            {ministries.map((m, i) => (
-              <div key={i} className={`card p-4 ${m.type === 'increase' ? 'bg-accent-50 border-accent-200' : 'bg-danger-50 border-danger-200'}`}>
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-slate-900">{m.name}</h4>
-                    <p className="text-sm text-slate-600 mt-1">{m.note}</p>
-                  </div>
-                  <div className="text-right ml-4">
-                    <div className={`text-lg font-bold font-display tabular-nums ${m.type === 'increase' ? 'text-accent-700' : 'text-danger-700'}`}>
-                      {m.change} хил. €
-                    </div>
-                    <span className={`badge ${m.type === 'increase' ? 'badge-success' : 'badge-danger'}`}>
-                      {m.percent}
-                    </span>
-                  </div>
-                </div>
+          {ministryDetails.map((ministry, i) => (
+            <SubSection key={i} title={ministry.title}>
+              <div className={`mb-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${
+                ministry.type === 'increase'
+                  ? 'bg-accent-100 text-accent-700'
+                  : 'bg-danger-100 text-danger-700'
+              }`}>
+                {ministry.type === 'increase' ? '▲' : '▼'} {ministry.subtitle}
               </div>
-            ))}
-          </div>
+
+              <DataTable
+                headers={["Показател", "Ноември", "Декември", "Промяна (хил. €)", "Промяна (%)"]}
+                data={ministry.rows}
+              />
+
+              {ministry.keyAddition && (
+                <div className="mt-4 p-3 bg-accent-50 border border-accent-200 rounded-lg text-sm">
+                  <strong className="text-accent-800">Ключова добавка:</strong>{' '}
+                  <span className="text-accent-700">{ministry.keyAddition}</span>
+                </div>
+              )}
+
+              <p className="mt-4 text-sm text-slate-600">
+                <strong className="text-slate-700">Извод:</strong> {ministry.conclusion}
+              </p>
+            </SubSection>
+          ))}
+
+          <SubSection title="6.7. Други ведомства">
+            <DataTable
+              headers={["Показател", "Ноември", "Декември", "Промяна (хил. €)", "Промяна (%)"]}
+              data={otherAgencies}
+            />
+          </SubSection>
 
           {/* Ministry Changes Bar Chart */}
           <div className="mt-8 card p-6">
