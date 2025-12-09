@@ -6,7 +6,6 @@ import {
   DeficitLineChart,
   DebtBarChart,
   MacroIndicatorsBarChart,
-  MaastrichtCriteriaVisualization,
   SectorsComparisonBarChart
 } from './BudgetVisualizations';
 
@@ -767,29 +766,149 @@ export default function FullAnalysis() {
         {/* XI. ЕС ИЗИСКВАНИЯ */}
         <Section id="eu" title="XI. СЪОТВЕТСТВИЕ С ИЗИСКВАНИЯТА НА ЕС">
           <SubSection title="11.1. Маастрихтски критерии">
-            <div className="space-y-3 mb-4">
-              {maastrichtCriteria.map((c, i) => (
-                <div key={i} className={`card p-4 flex justify-between items-center ${
-                  c.status === 'ok' ? 'bg-accent-50 border-accent-200' : 'bg-warning-50 border-warning-200'
-                }`}>
-                  <div>
-                    <div className="font-semibold text-slate-900">{c.criterion}</div>
-                    <div className="text-sm text-slate-500">Праг: {c.threshold}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className={`text-lg font-bold font-display ${c.status === 'ok' ? 'text-accent-700' : 'text-warning-700'}`}>
-                      {c.bulgaria}
-                    </div>
-                    <span className={`badge ${c.status === 'ok' ? 'badge-success' : 'badge-warning'}`}>
-                      {c.status === 'ok' ? 'Изпълнен' : 'Внимание'}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="text-sm text-slate-600 italic">
-              <strong className="text-slate-700">Бележка:</strong> Инфлационният критерий е повишен, но е в рамките на допустимото за страна, приемаща еврото.
+            <p className="text-slate-600 mb-6">
+              Маастрихтските критерии са условия за членство в еврозоната, определени с Договора от Маастрихт (1992 г.).
+              България трябва да изпълни тези критерии, за да приеме еврото като официална валута.
             </p>
+
+            {/* Comparison Table */}
+            <div className="card overflow-hidden mb-6">
+              <div className="p-4 bg-slate-50 border-b border-slate-200">
+                <h4 className="font-semibold text-slate-900">Сравнение: Актуални стойности vs Прагове</h4>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="bg-slate-50 border-b border-slate-200">
+                      <th className="px-4 py-3 text-left font-semibold text-slate-600 uppercase tracking-wider text-xs">Критерий</th>
+                      <th className="px-4 py-3 text-center font-semibold text-slate-600 uppercase tracking-wider text-xs">Праг</th>
+                      <th className="px-4 py-3 text-center font-semibold text-slate-600 uppercase tracking-wider text-xs">България</th>
+                      <th className="px-4 py-3 text-center font-semibold text-slate-600 uppercase tracking-wider text-xs">Разлика</th>
+                      <th className="px-4 py-3 text-center font-semibold text-slate-600 uppercase tracking-wider text-xs">Статус</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr className="hover:bg-slate-50">
+                      <td className="px-4 py-4">
+                        <div className="font-medium text-slate-900">Бюджетен дефицит</div>
+                        <div className="text-xs text-slate-500">% от БВП</div>
+                      </td>
+                      <td className="px-4 py-4 text-center font-mono">≤ 3%</td>
+                      <td className="px-4 py-4 text-center font-bold font-mono">3%</td>
+                      <td className="px-4 py-4 text-center"><span className="badge badge-success">+0.0 пр.п.</span></td>
+                      <td className="px-4 py-4 text-center"><span className="badge badge-success">✓ Изпълнен</span></td>
+                    </tr>
+                    <tr className="hover:bg-slate-50">
+                      <td className="px-4 py-4">
+                        <div className="font-medium text-slate-900">Държавен дълг</div>
+                        <div className="text-xs text-slate-500">% от БВП</div>
+                      </td>
+                      <td className="px-4 py-4 text-center font-mono">≤ 60%</td>
+                      <td className="px-4 py-4 text-center font-bold font-mono">31.3%</td>
+                      <td className="px-4 py-4 text-center"><span className="badge badge-success">+28.7 пр.п.</span></td>
+                      <td className="px-4 py-4 text-center"><span className="badge badge-success">✓ Изпълнен</span></td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 bg-warning-50/30">
+                      <td className="px-4 py-4">
+                        <div className="font-medium text-slate-900">Инфлация (ХИПЦ)</div>
+                        <div className="text-xs text-slate-500">%</div>
+                      </td>
+                      <td className="px-4 py-4 text-center font-mono">≤ 2.5%</td>
+                      <td className="px-4 py-4 text-center font-bold font-mono text-warning-700">3.5%</td>
+                      <td className="px-4 py-4 text-center"><span className="badge badge-warning">-1.0 пр.п.</span></td>
+                      <td className="px-4 py-4 text-center"><span className="badge badge-warning">⚠ Внимание</span></td>
+                    </tr>
+                    <tr className="hover:bg-slate-50">
+                      <td className="px-4 py-4">
+                        <div className="font-medium text-slate-900">Дългосрочни лихви</div>
+                        <div className="text-xs text-slate-500">%</div>
+                      </td>
+                      <td className="px-4 py-4 text-center font-mono">≤ 4%</td>
+                      <td className="px-4 py-4 text-center font-bold font-mono">3.8%</td>
+                      <td className="px-4 py-4 text-center"><span className="badge badge-success">+0.2 пр.п.</span></td>
+                      <td className="px-4 py-4 text-center"><span className="badge badge-success">✓ Изпълнен</span></td>
+                    </tr>
+                    <tr className="hover:bg-slate-50">
+                      <td className="px-4 py-4">
+                        <div className="font-medium text-slate-900">Валутен курс</div>
+                        <div className="text-xs text-slate-500">ERM II</div>
+                      </td>
+                      <td className="px-4 py-4 text-center font-mono">—</td>
+                      <td className="px-4 py-4 text-center font-bold">Фиксиран</td>
+                      <td className="px-4 py-4 text-center">—</td>
+                      <td className="px-4 py-4 text-center"><span className="badge badge-success">✓ Изпълнен</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Warning about inflation */}
+            <div className="p-4 bg-warning-50 border border-warning-200 rounded-xl mb-6">
+              <div className="flex gap-3">
+                <div className="w-8 h-8 bg-warning-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-warning-600 font-bold">!</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-warning-900 mb-1">Относно инфлационния критерий</h4>
+                  <p className="text-sm text-warning-800">
+                    Инфлацията в България (3.5% ХИПЦ) надвишава референтната стойност от 2.5%, но се очаква да се
+                    понижи до 2.5% до 2028 г. съгласно прогнозата на МФ. Това превишение не възпрепятства членството
+                    в еврозоната, а сигнализира за необходимост от допълнително наблюдение.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Criteria Explanations */}
+            <div className="space-y-4 mb-6">
+              <h4 className="font-semibold text-slate-900">Какво означава всеки критерий?</h4>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="card p-4 bg-slate-50">
+                  <h5 className="font-semibold text-slate-800 mb-2">1. Бюджетен дефицит</h5>
+                  <p className="text-sm text-slate-600">
+                    Разликата между държавните разходи и приходи не трябва да надвишава 3% от БВП.
+                    Този критерий гарантира фискална дисциплина и устойчиви публични финанси.
+                  </p>
+                </div>
+                <div className="card p-4 bg-slate-50">
+                  <h5 className="font-semibold text-slate-800 mb-2">2. Държавен дълг</h5>
+                  <p className="text-sm text-slate-600">
+                    Общият държавен дълг не трябва да надвишава 60% от БВП. България е значително
+                    под този праг (31.3%), което показва здрава дългова позиция.
+                  </p>
+                </div>
+                <div className="card p-4 bg-slate-50">
+                  <h5 className="font-semibold text-slate-800 mb-2">3. Ценова стабилност (инфлация)</h5>
+                  <p className="text-sm text-slate-600">
+                    Инфлацията (ХИПЦ) не трябва да надвишава с повече от 1.5 пр.п. средната инфлация
+                    на трите страни от ЕС с най-ниска инфлация. Референтната стойност е около 2.5%.
+                  </p>
+                </div>
+                <div className="card p-4 bg-slate-50">
+                  <h5 className="font-semibold text-slate-800 mb-2">4. Дългосрочни лихвени проценти</h5>
+                  <p className="text-sm text-slate-600">
+                    Лихвите по дългосрочни държавни облигации не трябва да надвишават с повече от
+                    2 пр.п. средната стойност на трите страни с най-ниска инфлация.
+                  </p>
+                </div>
+                <div className="card p-4 bg-slate-50 md:col-span-2">
+                  <h5 className="font-semibold text-slate-800 mb-2">5. Валутен курс (ERM II)</h5>
+                  <p className="text-sm text-slate-600">
+                    Страната трябва да участва в Механизма на обменните курсове (ERM II) поне 2 години
+                    без сериозни напрежения и без девалвация. България участва от юли 2020 г. с фиксиран
+                    курс 1.95583 лв. за 1 евро.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Source */}
+            <div className="text-xs text-slate-500 border-t border-slate-200 pt-4">
+              <strong>Източници:</strong> Договор за Европейския съюз (Договора от Маастрихт), чл. 140 и Протокол № 13;
+              Европейска централна банка (ЕЦБ) — Доклад за конвергенция 2024;
+              Министерство на финансите — Средносрочна бюджетна прогноза 2026-2028.
+            </div>
           </SubSection>
 
           <SubSection title="11.2. Динамика на държавния дълг">
@@ -830,11 +949,6 @@ export default function FullAnalysis() {
               </p>
             </div>
           </SubSection>
-
-          {/* Maastricht Criteria Visualization */}
-          <div className="mt-8 card p-6">
-            <MaastrichtCriteriaVisualization />
-          </div>
 
           {/* Debt Bar Chart */}
           <div className="mt-8 card p-6">
