@@ -384,19 +384,6 @@ function SummaryView() {
   );
 }
 
-// Bulgarian Flag Component
-function BulgarianFlag({ className = "w-10 h-10" }) {
-  return (
-    <div className={`flag-bulgaria rounded-lg overflow-hidden shadow-sm ${className}`}>
-      <div className="bg-white h-1/3"></div>
-      <div className="bg-[#00966E] h-1/3 flex items-center justify-center">
-        <span className="text-white font-bold text-xs">BG</span>
-      </div>
-      <div className="bg-[#D62612] h-1/3"></div>
-    </div>
-  );
-}
-
 export default function App() {
   return (
     <div className="min-h-screen bg-slate-50">
@@ -404,12 +391,11 @@ export default function App() {
       <header className="site-header sticky top-0 z-sticky">
         <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+            {/* Title */}
             <div className="flex items-center gap-3">
-              <BulgarianFlag className="w-10 h-10" />
-              <div className="hidden sm:block">
-                <h1 className="text-lg font-bold text-slate-900">Бюджет 2026</h1>
-                <p className="text-xs text-slate-500">Сравнителен анализ</p>
+              <div>
+                <h1 className="text-lg font-bold text-slate-900">Анализ на Бюджет 2026</h1>
+                <p className="text-xs text-slate-500">Независим сравнителен анализ</p>
               </div>
             </div>
 
@@ -432,17 +418,17 @@ export default function App() {
       <footer className="site-footer">
         <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <BulgarianFlag className="w-8 h-8" />
-              <div className="text-sm text-slate-600">
-                Проект на Закон за държавния бюджет на Република България за 2026 г.
-              </div>
+            <div className="text-sm text-slate-600">
+              <span className="font-medium">Независим анализ</span> на проекта за държавен бюджет на Република България за 2026 г.
             </div>
             <div className="flex items-center gap-6 text-sm text-slate-500">
-              <span>Данни: Министерство на финансите</span>
+              <span>Източник: Министерство на финансите</span>
               <span className="hidden sm:inline text-slate-300">|</span>
-              <span>Версия от 05.12.2025</span>
+              <span>Анализ към 08.12.2025</span>
             </div>
+          </div>
+          <div className="mt-4 pt-4 border-t border-slate-200 text-center text-xs text-slate-400">
+            Този анализ е изготвен с информационна цел и не представлява официална позиция на държавна институция.
           </div>
         </div>
       </footer>

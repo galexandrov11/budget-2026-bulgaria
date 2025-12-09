@@ -350,7 +350,7 @@ function DataTable({ headers, data, className = "" }) {
 function Section({ id, title, children }) {
   return (
     <section id={id} className="mb-12 scroll-mt-20">
-      <h2 className="text-xl font-bold text-slate-900 font-display mb-4 pb-2 border-b-2 border-primary-500">
+      <h2 className="text-xl font-bold text-slate-900 font-display mb-4 pb-2 border-b-2 border-gov-500">
         {title}
       </h2>
       {children}
@@ -369,8 +369,8 @@ function SubSection({ title, children }) {
 
 function Comment({ children }) {
   return (
-    <div className="mt-4 p-4 bg-primary-50 border-l-4 border-primary-500 rounded-r-xl text-sm text-primary-900">
-      <strong className="text-primary-700">Коментар:</strong> {children}
+    <div className="mt-4 p-4 bg-gov-50 border-l-4 border-gov-500 rounded-r-xl text-sm text-gov-900">
+      <strong className="text-gov-700">Коментар:</strong> {children}
     </div>
   );
 }
@@ -378,7 +378,7 @@ function Comment({ children }) {
 function KeyFinding({ type, title, children }) {
   const styles = {
     warning: 'bg-warning-50 border-warning-500 text-warning-900',
-    info: 'bg-primary-50 border-primary-500 text-primary-900',
+    info: 'bg-gov-50 border-gov-500 text-gov-900',
     success: 'bg-accent-50 border-accent-500 text-accent-900'
   };
   return (
@@ -420,7 +420,7 @@ function TableOfContents({ activeSection, onNavigate }) {
                 onClick={(e) => { e.preventDefault(); onNavigate(s.id); }}
                 className={`block px-3 py-2 text-xs rounded-lg transition-all duration-200 ${
                   activeSection === s.id
-                    ? 'bg-primary-100 text-primary-700 font-medium'
+                    ? 'bg-gov-100 text-gov-700 font-medium'
                     : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                 }`}
               >
@@ -488,7 +488,7 @@ export default function FullAnalysis() {
                 "Промени в данъчното и осигурителното законодателство"
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary-500 mt-2 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-gov-500 mt-2 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -583,8 +583,8 @@ export default function FullAnalysis() {
               Изчисление на БВП: От прогнозата на МФ за държавен дълг 2026 г. (37,6 млрд. евро = 31,3% от БВП) се извежда:
             </p>
             <div className="grid md:grid-cols-3 gap-4 mb-4">
-              <div className="card bg-primary-50 border-primary-100 p-4 text-center">
-                <div className="text-2xl font-bold text-primary-700 font-display">≈ 120,1 млрд. €</div>
+              <div className="card bg-gov-50 border-gov-100 p-4 text-center">
+                <div className="text-2xl font-bold text-gov-700 font-display">≈ 120,1 млрд. €</div>
                 <div className="text-sm text-slate-600">Прогнозен БВП 2026</div>
               </div>
               <div className="card bg-slate-50 p-4 text-center">
@@ -711,7 +711,7 @@ export default function FullAnalysis() {
               "Дефицитът се задълбочава от 3,21% на 3,81% от БВП (+0,60 пр.п.), надхвърляйки целта от 3,0% по КФП."
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-3 card bg-slate-50/50 p-4">
-                <span className="w-7 h-7 bg-gradient-to-br from-primary-600 to-primary-700 text-white rounded-lg flex items-center justify-center text-sm font-medium flex-shrink-0 shadow-sm">
+                <span className="w-7 h-7 bg-gradient-to-br from-gov-600 to-gov-700 text-white rounded-lg flex items-center justify-center text-sm font-medium flex-shrink-0 shadow-sm">
                   {i + 1}
                 </span>
                 <span className="text-slate-700">{item}</span>
@@ -728,21 +728,21 @@ export default function FullAnalysis() {
           </p>
 
           <SubSection title="10.1. Въвеждане на еврото">
-            <div className="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white rounded-2xl p-6 mb-4 relative overflow-hidden">
+            <div className="bg-gradient-to-br from-gov-600 via-gov-700 to-gov-800 text-white rounded-2xl p-6 mb-4 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
               <p className="text-center text-lg mb-5 relative">От 1 януари 2026 г. България приема еврото като официална валута.</p>
               <div className="grid md:grid-cols-3 gap-4 text-center relative">
                 <div className="bg-white/10 backdrop-blur rounded-xl p-4">
                   <div className="text-2xl font-bold font-display">1.95583</div>
-                  <div className="text-primary-200 text-sm">BGN за 1 EUR</div>
+                  <div className="text-gov-200 text-sm">BGN за 1 EUR</div>
                 </div>
                 <div className="bg-white/10 backdrop-blur rounded-xl p-4">
                   <div className="text-2xl font-bold font-display">100%</div>
-                  <div className="text-primary-200 text-sm">Бюджет в евро</div>
+                  <div className="text-gov-200 text-sm">Бюджет в евро</div>
                 </div>
                 <div className="bg-white/10 backdrop-blur rounded-xl p-4">
                   <div className="text-2xl font-bold font-display">ERM II</div>
-                  <div className="text-primary-200 text-sm">→ Еврозонов режим</div>
+                  <div className="text-gov-200 text-sm">→ Еврозонов режим</div>
                 </div>
               </div>
             </div>
@@ -817,7 +817,7 @@ export default function FullAnalysis() {
                 "Дерогация за отбранителни разходи — позволява временно надхвърляне на лимити"
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary-500 mt-2 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-gov-500 mt-2 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -918,9 +918,9 @@ export default function FullAnalysis() {
             }))}
           />
 
-          <div className="mt-6 card bg-primary-50 border-primary-200 p-5">
+          <div className="mt-6 card bg-gov-50 border-gov-200 p-5">
             <div className="text-center">
-              <div className="text-3xl font-bold text-primary-700 font-display">262 общини</div>
+              <div className="text-3xl font-bold text-gov-700 font-display">262 общини</div>
               <div className="text-sm text-slate-600 mt-2">Общо намаление: -29 434,4 хил. € (-0,59%)</div>
             </div>
           </div>
@@ -938,7 +938,7 @@ export default function FullAnalysis() {
                 { label: "БВП", text: "Прогнозен номинален БВП за 2026 г. ~120,1 млрд. € (≈234,9 млрд. лв.)." }
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary-500 mt-2 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-gov-500 mt-2 flex-shrink-0" />
                   <span><strong className="text-slate-700">{item.label}:</strong> {item.text}</span>
                 </li>
               ))}
@@ -949,7 +949,7 @@ export default function FullAnalysis() {
             <div className="grid md:grid-cols-2 gap-2">
               {abbreviations.map((a, i) => (
                 <div key={i} className="text-sm p-2 rounded-lg hover:bg-slate-50 transition-colors">
-                  <span className="font-mono font-bold text-primary-600">{a.abbr}</span>
+                  <span className="font-mono font-bold text-gov-600">{a.abbr}</span>
                   <span className="text-slate-600"> — {a.full}</span>
                 </div>
               ))}
@@ -967,7 +967,7 @@ export default function FullAnalysis() {
                 "Закон за въвеждане на еврото в Република България"
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary-500 mt-2 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-gov-500 mt-2 flex-shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}

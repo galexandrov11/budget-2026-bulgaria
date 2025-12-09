@@ -653,7 +653,7 @@ export const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div className="bg-white/95 backdrop-blur-sm p-3 border border-slate-200 rounded-xl shadow-lg">
         <p className="font-semibold text-slate-900">{label || payload[0].name}</p>
-        <p className="text-sm text-primary-600 font-medium">{`${payload[0].value.toLocaleString()} млн. €`}</p>
+        <p className="text-sm text-gov-600 font-medium">{`${payload[0].value.toLocaleString()} млн. €`}</p>
         {payload[0].payload.percent && <p className="text-xs text-slate-500">{payload[0].payload.percent}</p>}
       </div>
     );
@@ -841,8 +841,8 @@ export const MacroIndicatorsBarChart = ({ showTitle = true, height = 350 }) => (
       </BarChart>
     </ResponsiveContainer>
     <div className="grid grid-cols-3 gap-4 text-center">
-      <div className="bg-primary-50 p-4 rounded-xl border border-primary-100">
-        <div className="text-2xl font-bold text-primary-600 font-display">2,7%</div>
+      <div className="bg-gov-50 p-4 rounded-xl border border-gov-100">
+        <div className="text-2xl font-bold text-gov-600 font-display">2,7%</div>
         <div className="text-sm text-slate-600">БВП растеж 2026</div>
         <div className="text-xs text-slate-400">↓ 2,4% до 2028</div>
       </div>
@@ -1094,8 +1094,8 @@ export default function BudgetVisualizations() {
               </BarChart>
             </ResponsiveContainer>
             <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="bg-primary-50 p-4 rounded-xl border border-primary-100">
-                <div className="text-2xl font-bold text-primary-600 font-display">2,7%</div>
+              <div className="bg-gov-50 p-4 rounded-xl border border-gov-100">
+                <div className="text-2xl font-bold text-gov-600 font-display">2,7%</div>
                 <div className="text-sm text-slate-600">БВП растеж 2026</div>
                 <div className="text-xs text-slate-400">↓ 2,4% до 2028</div>
               </div>
@@ -1225,7 +1225,7 @@ export default function BudgetVisualizations() {
             onClick={() => setActiveTab(tab.id)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
               activeTab === tab.id
-                ? 'bg-white text-primary-600 shadow-sm'
+                ? 'bg-white text-gov-600 shadow-sm'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
             }`}
           >
