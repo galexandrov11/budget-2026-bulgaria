@@ -200,6 +200,83 @@ const taxChanges = [
   { area: "GPS контрол на превози", november: "Няма", december: "задължително", effect: "Нова фискална мярка" }
 ];
 
+// Section 13.1: Gambling Tax
+const gamblingTax = {
+  title: "13.1. Данък върху хазарта (Закон за хазарта, чл. 30)",
+  rows: [
+    { param: "Ставка по ал. 3 и ал. 4", november: "20% → 25%", december: "20% → 22%", change: "-3 пр.п." }
+  ],
+  comment: "Първоначално предложеното увеличение на данъка върху хазартните оператори е намалено от 25% на 22%."
+};
+
+// Section 13.2: ZKPO (Corporate Tax)
+const zkpoChanges = {
+  title: "13.2. Закон за корпоративното подоходно облагане (ЗКПО)",
+  rows: [
+    { change: "Пазар за растеж (чл. 44, 195, 196)", november: "✓ Включено", december: "✓ Включено" },
+    { change: "Ускорена амортизация за ел. автомобили (50%)", november: "✓ чл. 55, ал. 8", december: "✓ чл. 55, ал. 8" },
+    { change: "Отмяна на чл. 55, ал. 7", november: "✓ Отменя се", december: "✗ Запазва се" },
+    { change: "Данък при източника (чл. 200): 5% → 10%", november: "✓ Включено", december: "✗ Няма промяна" },
+    { change: "R&D облекчение (чл. 69) — 25% допълнително намаление", november: "✗ Няма", december: "✓ НОВО" },
+    { change: "Изключение за вероизповедания (чл. 12)", november: "✗ Няма", december: "✓ НОВО" }
+  ],
+  keyDifference: "Декемврийската версия добавя ново данъчно облекчение за научноизследователска и развойна дейност — 25% допълнително намаление на разходите за R&D."
+};
+
+// Section 13.3: ZDDFL (Personal Income Tax)
+const zddflChanges = {
+  title: "13.3. Данък върху доходите на физически лица (ЗДДФЛ)",
+  rows: [
+    { change: "Пазар за растеж (чл. 37)", november: "✓ Включено", december: "✓ Включено" },
+    { change: "Отмяна на чл. 46, ал. 3", november: "✓ Отменя се", december: "✗ Не се отменя" }
+  ],
+  comment: "В ноемврийската версия се предвижда отмяна на чл. 46, ал. 3 от ЗДДФЛ, която в декемврийската версия липсва."
+};
+
+// Section 13.4: Public Sector Wages (NEW in December)
+const publicSectorWages = {
+  title: "13.4. Възнаграждения в публичния сектор (НОВО в декември)",
+  intro: "Декемврийската версия добавя нови §21-24, които замразяват автоматичния механизъм за увеличение на заплатите:",
+  rows: [
+    { sector: "Съдебна власт (§21)", base: "Ниво 2025 г.", maxIndex: "Таван: 90% от РС" },
+    { sector: "Въоръжени сили (§22)", base: "Ниво 2025 г.", maxIndex: "До 10%" },
+    { sector: "МВР (§23)", base: "Ниво 2025 г.", maxIndex: "До 10%" },
+    { sector: "НСО (§24)", base: "Ниво 2025 г.", maxIndex: "До 10%" }
+  ],
+  comment: "Вместо автоматично обвързване със средната заплата в публичния сектор, заплатите се фиксират на ниво 2025 г. с възможност за увеличение до 10%. РС = районен съдия."
+};
+
+// Section 13.5: Social Parameters
+const socialParameters = {
+  title: "13.5. Социални параметри (чл. 62-63)",
+  rows: [
+    { param: "База за ДАНС/ДАР", value: "384 €/месец" },
+    { param: "Минимална заплата (държавен служител)", value: "620,20 €/месец" },
+    { param: "Средномесечен доход за семейни помощи", value: "466 €" },
+    { param: "Праг за диференцирани помощи", value: "415 €" }
+  ]
+};
+
+// Section 13.6: New Provisions (December only)
+const newProvisions = {
+  title: "13.6. Нови разпоредби (само в декемврийската версия)",
+  rows: [
+    { paragraph: "§18", content: "GPS проследяване за превоз на стоки с висок фискален риск (глоби 500-10 000 €)" },
+    { paragraph: "§25", content: "Суспендиране на чл. 92 от Закона за висшето образование за 2026 г." },
+    { paragraph: "§26", content: "Програма за подкрепа на лекари специализанти (срок: 2 месеца)" }
+  ]
+};
+
+// Section 13.7: Local Taxes (ZMDT)
+const localTaxes = {
+  title: "13.7. Местни данъци и такси (ЗМДТ)",
+  rows: [
+    { aspect: "Преходен режим за такса битови отпадъци", november: "2 алинеи", december: "6 алинеи (детайлно)" },
+    { aspect: "Срок за приемане на план-сметки", november: "31.01.2026", december: "31.01.2026" },
+    { aspect: "Отчисления по ЗУО — лихви", november: "Няма уредба", december: "Без лихви за 2026" }
+  ]
+};
+
 const abbreviations = [
   { abbr: "БВП", full: "Брутен вътрешен продукт" },
   { abbr: "ЗДБРБ", full: "Закон за държавния бюджет на Република България" },
@@ -1220,6 +1297,76 @@ export default function FullAnalysis() {
 
         {/* XIII. ДАНЪЧНО ЗАКОНОДАТЕЛСТВО */}
         <Section id="taxlaw" title="XIII. ПРОМЕНИ В ДАНЪЧНОТО И ОСИГУРИТЕЛНО ЗАКОНОДАТЕЛСТВО">
+          {/* 13.1 Gambling Tax */}
+          <SubSection title={gamblingTax.title}>
+            <DataTable
+              headers={["Параметър", "Ноември 2025", "Декември 2025", "Промяна"]}
+              data={gamblingTax.rows.map(r => ({ param: r.param, november: r.november, december: r.december, change: r.change }))}
+            />
+            <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-600">
+              <strong className="text-slate-700">Коментар:</strong> {gamblingTax.comment}
+            </div>
+          </SubSection>
+
+          {/* 13.2 ZKPO */}
+          <SubSection title={zkpoChanges.title}>
+            <DataTable
+              headers={["Промяна", "Ноември", "Декември"]}
+              data={zkpoChanges.rows.map(r => ({ change: r.change, november: r.november, december: r.december }))}
+            />
+            <div className="mt-3 p-3 bg-accent-50 border border-accent-200 rounded-lg text-sm text-slate-600">
+              <strong className="text-accent-700">Ключова разлика:</strong> {zkpoChanges.keyDifference}
+            </div>
+          </SubSection>
+
+          {/* 13.3 ZDDFL */}
+          <SubSection title={zddflChanges.title}>
+            <DataTable
+              headers={["Промяна", "Ноември", "Декември"]}
+              data={zddflChanges.rows.map(r => ({ change: r.change, november: r.november, december: r.december }))}
+            />
+            <div className="mt-3 p-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-600">
+              <strong className="text-slate-700">Коментар:</strong> {zddflChanges.comment}
+            </div>
+          </SubSection>
+
+          {/* 13.4 Public Sector Wages */}
+          <SubSection title={publicSectorWages.title}>
+            <p className="text-sm text-slate-600 mb-3">{publicSectorWages.intro}</p>
+            <DataTable
+              headers={["Сектор (параграф)", "База за 2026 г.", "Максимална индексация"]}
+              data={publicSectorWages.rows.map(r => ({ sector: r.sector, base: r.base, maxIndex: r.maxIndex }))}
+            />
+            <div className="mt-3 p-3 bg-warning-50 border border-warning-200 rounded-lg text-sm text-slate-600">
+              <strong className="text-warning-700">Коментар:</strong> {publicSectorWages.comment}
+            </div>
+          </SubSection>
+
+          {/* 13.5 Social Parameters */}
+          <SubSection title={socialParameters.title}>
+            <DataTable
+              headers={["Параметър", "Стойност"]}
+              data={socialParameters.rows.map(r => ({ param: r.param, value: r.value }))}
+            />
+          </SubSection>
+
+          {/* 13.6 New Provisions */}
+          <SubSection title={newProvisions.title}>
+            <DataTable
+              headers={["Параграф", "Съдържание"]}
+              data={newProvisions.rows.map(r => ({ paragraph: r.paragraph, content: r.content }))}
+            />
+          </SubSection>
+
+          {/* 13.7 Local Taxes */}
+          <SubSection title={localTaxes.title}>
+            <DataTable
+              headers={["Аспект", "Ноември", "Декември"]}
+              data={localTaxes.rows.map(r => ({ aspect: r.aspect, november: r.november, december: r.december }))}
+            />
+          </SubSection>
+
+          {/* 13.8 Summary */}
           <SubSection title="13.8. Обобщение на ключовите разлики">
             <DataTable
               headers={["Област", "Ноември → Декември", "Ефект"]}
@@ -1229,7 +1376,7 @@ export default function FullAnalysis() {
 
           <div className="mt-6 p-4 bg-slate-100 rounded-xl text-sm text-slate-600">
             <strong className="text-slate-700">Забележка:</strong> Основните данъчни ставки (ДДС 20%, корпоративен данък 10%, плосък данък 10%)
-            не се променят и в двете версии. Осигурителните вноски също остават непроменени в рамките на ЗДБРБ.
+            не се променят и в двете версии. Осигурителните вноски също остават непроменени в рамките на ЗДБРБ — те се уреждат в отделния Закон за бюджета на ДОО.
           </div>
         </Section>
 
