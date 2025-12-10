@@ -27,3 +27,13 @@ Thumbs.db
 
 # Vite
 *.local
+
+# Audio files and transcriptions
+*.mp3
+*.wav
+*.txt
+audio*
+
+# Whisper models
+*.bin
+ggml-*
